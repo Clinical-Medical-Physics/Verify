@@ -51,7 +51,7 @@ namespace SRSConeMUVerify.ViewModels
 			{
 				var plan = _patient.Courses.FirstOrDefault(x => x.Id == obj.CourseId).PlanSetups.FirstOrDefault(x => x.Id == obj.PlanId);
 				SelectedPlanId = plan.Id;
-				TreatmentPercentage = plan.TreatmentPercentage * 100.0;
+				TreatmentPercentage = plan.PrescribedPercentage * 100.0;
 			}
 		}
 	}

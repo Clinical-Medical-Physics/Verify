@@ -8,10 +8,47 @@
         mc:Ignorable="d"
         Title="ConfigurationView" Height="450" Width="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <DataGrid></DataGrid>
-    </Grid>
+      <Grid.RowDefinitions>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <StackPanel Orientation="Horizontal">
+         <Label Content="Configure using Eclipse Data or CSV file:" Margin="5"/>
+         <!--
+         <CheckBox Content="Eclipse Data" VerticalAlignment="Center" Margin="5" Command="{Binding EclipseDataChecked}" />
+         <CheckBox Content="CSV Data" VerticalAlignment="Center" Margin="5" Command="{Binding CSVDataChecked}" />
+         -->
+         <RadioButton Content="Eclipse Data" VerticalAlignment="Center" Margin="5" IsChecked="{Binding AppConfigModel.IsServerData}" Command="{Binding EclipsDataChecked}"/>
+         <RadioButton Content="CSV Data" VerticalAlignment="Center" IsChecked="{Binding AppConfigModel.IsCSVData}" Command="{Binding CSVDataChecked}"/>
+         <Label Content="{Binding AppConfigModel.IsServerData}"/>
+         <Label Content="{Binding AppConfigModel.IsCSVData}"/>
+         <Label Content="{Binding AppConfigModel.Server}"/>
+         <Label Content="{Binding AppDirectory}"/>
+      </StackPanel>
+      <StackPanel Grid.Row="1" Orientation="Vertical" IsEnabled="{Binding AppConfigModel.IsServerData}">
+         <Label Content="Enter Server name where DCF folder resides:" Margin="5"/>
+         <TextBox Margin="5" Text="{Binding AppConfigModel.Server}" />
+         <Button Content="Try Automatic Import" Width="150" Command="{Binding ImportXmlFromServer}"/>
+         <DataGrid Margin="5" ItemsSource="{Binding AppConfigModel.CalcModelsTable}"/>
+      </StackPanel>
+      <StackPanel Grid.Row="2" Orientation="Vertical" IsEnabled="{Binding AppConfigModel.IsCSVData}">
+         <Label Content="Navigate to select CSV file for TMR and Cone Factors:" Margin="5"/>
+         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Select TMR File" Margin="5"/>
+            <Button Content="Select Cone Factor File" Margin="5"/>
+         </StackPanel>
+      </StackPanel>
+      <StackPanel Grid.Row="3" Orientation="Vertical">
+         <Label Content="Imported TMR and Cone Factors"/>
+         <StackPanel Orientation="Horizontal">
+            <!--
+            <DataGrid ItemsSource="{Binding TMRData}"  />
+            <DataGrid ItemsSource="{Binding ConeFactorData}"/>
+            -->
+         </StackPanel>
+
+      </StackPanel>
+   </Grid>
 </metro:MetroWindow>

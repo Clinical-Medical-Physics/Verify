@@ -10,7 +10,7 @@ namespace SRSConeMUVerify.ViewModels
 {
     public class NavigationViewModel
     {
-        public ConfigurationViewModel ConfigurationViewModel { get; }
+        public ConfigurationViewModel ConfigurationViewModel { get; set; }
         public DelegateCommand LaunchConfigurationCommand { get; private set; }
         public NavigationViewModel(ConfigurationViewModel configurationViewModel)
         {
