@@ -1,8 +1,8 @@
 ﻿using Prism.Mvvm;
 using SRSConeMUVerify.Utilities;
-
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -12,13 +12,15 @@ namespace SRSConeMUVerify.Models
 {
    public class AppConfigModel : BindableBase
    {
-      //private PatientShiftModel _xShift;
+      
+      private bool _isConfigured;
 
-      //public PatientShiftModel XShift
-      //{
-      //   get { return _xShift; }
-      //   set { SetProperty(ref _xShift, value); }
-      //}
+      public bool IsConfigured
+      {
+         get { return _isConfigured; }
+         set { SetProperty(ref _isConfigured , value); }
+      }
+
       private bool _isServerData;
       public bool IsServerData
       {
@@ -33,8 +35,14 @@ namespace SRSConeMUVerify.Models
          get { return _isCSVData; }
          set { SetProperty(ref _isCSVData , value); }
       }
+      private string _serverBeamDataDirectory;
 
-      //public string Server { get; set; }
+      public string ServerBeamDataDirectory
+      {
+         get { return _serverBeamDataDirectory; }
+         set { SetProperty(ref _serverBeamDataDirectory, value); }
+      }
+      
       private string _server;
 
       public string Server
@@ -43,7 +51,7 @@ namespace SRSConeMUVerify.Models
          set {SetProperty(ref  _server,value); }
       }
 
-      //public IEnumerable<XElement> CalcModels { get; set; }
+      
       private IEnumerable<XElement> _calcModels;
 
       public IEnumerable<XElement> CalcModels
@@ -52,47 +60,49 @@ namespace SRSConeMUVerify.Models
          set { SetProperty(ref _calcModels, value); }
       }
 
-      //public DataTable CalcModelsTable { get; set; }
-      private DataTable _calcModelsTable;
+      
+      private ObservableCollection<CalcModelModel> _calcModelModels;
 
-      public DataTable CalcModelsTable
+      public ObservableCollection<CalcModelModel> CalcModelModels
       {
-         get { return _calcModelsTable; }
-         set { SetProperty(ref _calcModelsTable, value); }
+         get { return _calcModelModels; }
+         set { SetProperty(ref _calcModelModels, value); }
       }
 
+      private CalcModelModel _selectedCalcModel;
+
+      public CalcModelModel SelectedCalcModel
+      {
+         get { return _selectedCalcModel; }
+         set { SetProperty(ref _selectedCalcModel, value); }
+      }
+
+      private MapfileModel _mapfileModel;
+
+      public MapfileModel MapfileModel
+      {
+         get { return _mapfileModel; }
+         set { SetProperty(ref _mapfileModel,  value); }
+      }
       public AppConfigModel()
       {
          Server = "undefined";
          IsServerData = false;
          IsCSVData = false;
+         CalcModelModels = new ObservableCollection<CalcModelModel>();
       }
-      public DataTable CalcModelToTable()
+      public void CalcModelToTable()
       {
-         DataTable calcModelTable = new DataTable();
-         DataColumn name = new DataColumn("Name", typeof(string));
-         DataColumn algoName = new DataColumn("Algorithm Name");
-         DataColumn algoVer = new DataColumn("Algorithm Version");
-         DataColumn beamDatDir = new DataColumn("Beam Data Directory");
-         DataColumn enabled = new DataColumn("Enabled");
-
-         calcModelTable.Columns.Add(name);
-         calcModelTable.Columns.Add(algoName);
-         calcModelTable.Columns.Add(algoVer);
-         calcModelTable.Columns.Add(beamDatDir);
-         calcModelTable.Columns.Add(enabled);
-
          foreach (var model in CalcModels)
          {
-            DataRow dataRow = calcModelTable.NewRow();
-            dataRow[0] = (string)model.Attribute("Name");
-            dataRow[1] = (string)model.Attribute("AlgorithmName");
-            dataRow[2] = (string)model.Attribute("AlgorithmVersion");
-            dataRow[3] = (string)model.Attribute("BeamDataDirectory");
-            dataRow[4] = (string)model.Attribute("Enabled");
-            calcModelTable.Rows.Add(dataRow);
+            CalcModelModel calcModel = new CalcModelModel();
+            calcModel.Name = (string)model.Attribute("Name");
+            calcModel.AlgorithmName = (string)model.Attribute("AlgorithmName");
+            calcModel.AlgorithmVersion = (string)model.Attribute("AlgorithmVersion");
+            calcModel.BeamDataDirectory = (string)model.Attribute("BeamDataDirectory");
+            calcModel.Enabled = (string)model.Attribute("Enabled");
+            CalcModelModels.Add(calcModel);
          }
-         return calcModelTable;
       }
    }
 }

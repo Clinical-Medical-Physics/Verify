@@ -30,6 +30,7 @@ namespace SRSConeMUVerify.Startup
             container.RegisterInstance<PlanSetup>(plan);
          }
          container.RegisterType<AppConfigModel>();
+         container.RegisterType<ConfiguredModel>();
          container.RegisterType<ConfigurationViewModel>();
 
          container.RegisterType<MainViewModel>();

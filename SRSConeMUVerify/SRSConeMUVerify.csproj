@@ -121,7 +121,10 @@
     </Compile>
     <Compile Include="Events\PlanSelectedEvent.cs" />
     <Compile Include="Models\AppConfigModel.cs" />
+    <Compile Include="Models\CalcModelModel.cs" />
+    <Compile Include="Models\ConfiguredModel.cs" />
     <Compile Include="Models\CourseModel.cs" />
+    <Compile Include="Models\MapfileModel.cs" />
     <Compile Include="Models\PlanModel.cs" />
     <Compile Include="Models\TMRModel.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
@@ -130,6 +133,8 @@
     <Compile Include="Utilities\DataBaseConnector.cs" />
     <Compile Include="Utilities\DatabaseXmlReader.cs" />
     <Compile Include="Utilities\IDataConnection.cs" />
+    <Compile Include="Utilities\MapfileReader.cs" />
+    <Compile Include="Utilities\TmrXmlReader.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
@@ -172,22 +177,34 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="CalculationModels\CalcModels.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\AppConfig.json" />
-    <None Include="Resources\SRSConeFactors_Sample.csv" />
-    <None Include="Resources\SRSConeTMR6FFF_Sample.csv" />
-    <None Include="Resources\TMRData.json">
+    <Content Include="Resources\AppConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Resource Include="Resources\mapfile.txt" />
+    <Content Include="Resources\SRSConeFactors_Sample.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SRSConeTMR6FFF_Sample.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\TMRData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\SRSCalculationModels.xml" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ConfigurationView.xaml">
       <SubType>Designer</SubType>
@@ -214,5 +231,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

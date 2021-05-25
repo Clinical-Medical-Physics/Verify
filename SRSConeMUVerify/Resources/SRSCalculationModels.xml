@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Copyright Varian Medical Systems Inc.
+All rights reserved.
+
+DO NOT MODIFY THIS FILE!
+A mistake may cause DCF to stop working or produce incorrect
+results from calculation algorithms.
+-->
+<CalculationModels Version="0.1" schema="CalculationModels.xsd">
+   <CalculationModel Name="Varian Leaf Motion Calculator [8.9.08]" AlgorithmName="Varian Leaf Motion Calculator" AlgorithmVersion="8.9.08" BeamDataDirectory="" DefaultOptions="DefaultOptions\Default_options_Varian_Leaf_Motion_Calculator_[8.9.08].xml" Enabled="false"/>
+   <CalculationModel Name="Rigid Registration Algorithm [8.9.08]" AlgorithmName="Rigid Registration Algorithm" AlgorithmVersion="8.9.08" BeamDataDirectory="" DefaultOptions="DefaultOptions\Default_options_Rigid_Registration_Algorithm_[8.9.08].xml" Enabled="false"/>
+   <CalculationModel Name="Varian Leaf Motion Calculator [10.0.28]" AlgorithmName="Varian Leaf Motion Calculator" AlgorithmVersion="10.0.28" BeamDataDirectory="" DefaultOptions="DefaultOptions\Default_options_Varian_Leaf_Motion_Calculator_[10.0.28].xml" Enabled="false"/>
+   <CalculationModel Name="Smart LMC [10.0.28]" AlgorithmName="Smart LMC" AlgorithmVersion="10.0.28" BeamDataDirectory="" DefaultOptions="DefaultOptions\Default_options_Smart_LMC_[10.0.28].xml" Enabled="false"/>
+   <CalculationModel Name="Varian Leaf Motion Calculator [11.0.31]" AlgorithmName="Varian Leaf Motion Calculator" AlgorithmVersion="11.0.31" BeamDataDirectory="" DefaultOptions="DefaultOptions\Default_options_Varian_Leaf_Motion_Calculator_[11.0.31].xml" Enabled="true"/>
+   <CalculationModel Name="MSS Leaf Motion Calculator [11.0.31]" AlgorithmName="MSS Leaf Motion Calculator" AlgorithmVersion="11.0.31" BeamDataDirectory="" DefaultOptions="DefaultOptions\Default_options_MSS_Leaf_Motion_Calculator_[11.0.31].xml" Enabled="true"/>
+   <CalculationModel Name="Smart LMC [11.0.31]" AlgorithmName="Smart LMC" AlgorithmVersion="11.0.31" BeamDataDirectory="" DefaultOptions="DefaultOptions\Default_options_Smart_LMC_[11.0.31].xml" Enabled="true"/>
+   <CalculationModel Name="Rigid Registration Algorithm [10.0.28]" AlgorithmName="Rigid Registration Algorithm" AlgorithmVersion="10.0.28" BeamDataDirectory="" DefaultOptions="DefaultOptions\Default_options_Rigid_Registration_Algorithm_[10.0.28].xml" Enabled="false"/>
+   <CalculationModel Name="AAA_11031" AlgorithmName="Anisotropic Analytical Algorithm" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\AAA_11031" DefaultOptions="DefaultOptions\Default_options_AAA_11031.xml" Enabled="true"/>
+   <CalculationModel Name="Acuros_11031" AlgorithmName="Acuros External Beam" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\Acuros_11031" DefaultOptions="DefaultOptions\Default_options_Acuros_11031.xml" Enabled="true"/>
+   <CalculationModel Name="CDC_11031" AlgorithmName="Eclipse Cone Dose Calculation" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\CDC_11031" DefaultOptions="DefaultOptions\Default_options_CDC_11031.xml" Enabled="true"/>
+   <CalculationModel Name="EMC_11031" AlgorithmName="Electron Monte Carlo" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\EMC_11031" DefaultOptions="DefaultOptions\Default_options_EMC_11031.xml" Enabled="true"/>
+   <CalculationModel Name="GGPB_11031" AlgorithmName="Generalized Gaussian Pencil Beam" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\GGPB_11031" DefaultOptions="DefaultOptions\Default_options_GGPB_11031.xml" Enabled="true"/>
+   <CalculationModel Name="DVO_11031" AlgorithmName="Dose Volume Optimizer" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\DVO_11031" DefaultOptions="DefaultOptions\Default_options_DVO_11031.xml" Enabled="true"/>
+   <CalculationModel Name="PBC_11031" AlgorithmName="Pencil Beam Convolution" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\PBC_11031" DefaultOptions="DefaultOptions\Default_options_PBC_11031.xml" Enabled="true"/>
+   <CalculationModel Name="PDIP_11031" AlgorithmName="Portal Dose Image Prediction" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\PDIP_11031" DefaultOptions="DefaultOptions\Default_options_PDIP_11031.xml" Enabled="true"/>
+   <CalculationModel Name="PGO_11031" AlgorithmName="Plan Geometry Optimizer" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\PGO_11031" DefaultOptions="DefaultOptions\Default_options_PGO_11031.xml" Enabled="true"/>
+   <CalculationModel Name="PRO_11031" AlgorithmName="Progressive Resolution Optimizer" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\PRO_11031" DefaultOptions="DefaultOptions\Default_options_PRO_11031.xml" Enabled="true"/>
+   <CalculationModel Name="AAA-TB-RepData" AlgorithmName="Anisotropic Analytical Algorithm" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\AAA-TB-RepData" DefaultOptions="DefaultOptions\Default_options_AAA-TB-RepData.xml" Enabled="true"/>
+   <CalculationModel Name="MSS Leaf Motion Calculator [8.9.08]" AlgorithmName="MSS Leaf Motion Calculator" AlgorithmVersion="8.9.08" BeamDataDirectory="" DefaultOptions="DefaultOptions\Default_options_MSS_Leaf_Motion_Calculator_[8.9.08].xml" Enabled="true"/>
+   <CalculationModel Name="MSS Leaf Motion Calculator [10.0.28]" AlgorithmName="MSS Leaf Motion Calculator" AlgorithmVersion="10.0.28" BeamDataDirectory="" DefaultOptions="DefaultOptions\Default_options_MSS_Leaf_Motion_Calculator_[10.0.28].xml" Enabled="true"/>
+   <CalculationModel Name="PDIP_SLMC" AlgorithmName="Portal Dose Image Prediction" AlgorithmVersion="11.0.31" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\PDIP_VLMC" DefaultOptions="DefaultOptions\Default_options_PDIP_VLMC.xml" Enabled="true"/>
+   <CalculationModel Name="PDIP_8" AlgorithmName="Portal Dose Image Prediction" AlgorithmVersion="8.9.08" BeamDataDirectory="\\MSHSAPTVARF1\DCF$\client\BeamData\PDIP_8" DefaultOptions="DefaultOptions\Default_options_PDIP_8.xml" Enabled="true"/>
+</CalculationModels>

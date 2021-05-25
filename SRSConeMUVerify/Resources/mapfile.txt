@@ -1,0 +1,136 @@
+$StartOfMapFile
+$StartOfCodeSet
+ Machine Code:<000>
+  Treatment Machine:<Eclipse CAP><6X-SRS>
+   AddOn:<CN><07.03.2014 20:03:21><10mm CC><5mm CC>
+$EndOfCodeSet
+$StartOfCodeSet
+ Machine Code:<001>
+  Treatment Machine:<Trilogy><6X-SRS>
+   AddOn:<CN><08.03.2016 14:18:57><5mm CC><10mm CC><12mm CC><14mm CC><16mm CC><18mm CC><20mm CC><22mm CC><24mm CC><26mm CC><28mm CC><30mm CC>
+$EndOfCodeSet
+$StartOfCodeSet
+ Machine Code:<002>
+  Treatment Machine:<TrueBeam2247><6X>
+   AddOn:<CN><23.06.2015 16:31:18><4mm CC><5mm CC><10mm CC><15mm CC><7.5mm CC><12.5mm CC><17.5mm CC><CustomSRSAppl>
+$EndOfCodeSet
+$StartOfCodeSet
+ Machine Code:<003>
+  Treatment Machine:<TrueBeam2247><6X-FFF>
+   AddOn:<CN><23.06.2015 16:40:23><4mm CC><5mm CC><10mm CC><15mm CC><7.5mm CC><12.5mm CC><17.5mm CC><CustomSRSAppl>
+$EndOfCodeSet
+$StartOfCodeSet
+ Machine Code:<004>
+  Treatment Machine:<TrueBeam2247><10X>
+   AddOn:<CN><23.06.2015 16:44:30><4mm CC><5mm CC><10mm CC><15mm CC><7.5mm CC><12.5mm CC><17.5mm CC><CustomSRSAppl>
+$EndOfCodeSet
+$StartOfCodeSet
+ Machine Code:<005>
+  Treatment Machine:<TrueBeam2247><10X-FFF>
+   AddOn:<CN><23.06.2015 16:48:11><4mm CC><5mm CC><10mm CC><15mm CC><7.5mm CC><12.5mm CC><17.5mm CC><CustomSRSAppl>
+$EndOfCodeSet
+$StartOfDataSet
+ Machine Code:<000>
+  General Parameters:<000.PARAM><BCVer="11.0.47"><1><1213130790>
+  Model Parameters:<000.MODEL><BCVer="10.0.26"><1><4294967295>
+  AddOn:<CN>
+   FastPlanImportInfo:<000_CN_FastPlanImportInfo.xml><><1><1156317010>
+   AbsoluteDoseCalibration:<000_CN_AbsoluteDoseCalibration.xml><><1><2073352281>
+   OutputFactorTable:<000_CN_OutputFactorTable.xml><><1><718117457>
+   TMR:<000_CN_TMR.xml><><1><3342165859>
+   OPP:<000_CN_OPP.xml><><1><1950201442>
+   TMR_processed:<000_CN_TMR_processed.xml><BCVer="11.0.29"><1><295054685>
+   OPP_processed:<000_CN_OPP_processed.xml><BCVer="11.0.29"><1><396306220>
+   TMR_calculated:<000_CN_TMR_calculated.xml><BCVer="11.0.29"><1><268360248>
+   OPP_calculated:<000_CN_OPP_calculated.xml><BCVer="11.0.29"><1><2899174418>
+   ALL_histogram:<000_CN_ALL_histogram.xml><BCVer="11.0.29"><1><303565511>
+   TMR_error:<000_CN_TMR_error.xml><BCVer="11.0.29"><1><2003452308>
+   OPP_error:<000_CN_OPP_error.xml><BCVer="11.0.29"><1><2612118858>
+$EndOfDataSet
+$StartOfDataSet
+ Machine Code:<001>
+  General Parameters:<001.PARAM><BCVer="11.0.47"><1><638878080>
+  Model Parameters:<001.MODEL><BCVer="11.0.47"><1><1459154136>
+  AddOn:<CN>
+   FastPlanImportInfo:<001_CN_FastPlanImportInfo.xml><><1><1156317010>
+   AbsoluteDoseCalibration:<001_CN_AbsoluteDoseCalibration.xml><><1><2073352281>
+   OutputFactorTable:<001_CN_OutputFactorTable.xml><><1><634201931>
+   TMR:<001_CN_TMR.xml><><1><2101203266>
+   OPP:<001_CN_OPP.xml><><1><1586025270>
+   TMR_processed:<001_CN_TMR_processed.xml><><1><3654012389>
+   OPP_processed:<001_CN_OPP_processed.xml><><1><2107920275>
+   TMR_calculated:<001_CN_TMR_calculated.xml><><1><1235149239>
+   OPP_calculated:<001_CN_OPP_calculated.xml><><1><39100924>
+   ALL_histogram:<001_CN_ALL_histogram.xml><><1><2162294576>
+   TMR_error:<001_CN_TMR_error.xml><><1><1849664919>
+   OPP_error:<001_CN_OPP_error.xml><><1><2258978722>
+$EndOfDataSet
+$StartOfDataSet
+ Machine Code:<002>
+  General Parameters:<002.PARAM><><1><1027260624>
+  Model Parameters:<002.MODEL><><1><4231524492>
+  AddOn:<CN>
+   TMR:<002_CN_TMR.xml><BCVer="11.0.47"><1><4232682097>
+   OPP:<002_CN_OPP.xml><BCVer="11.0.47"><1><1476847535>
+   AbsoluteDoseCalibration:<002_CN_AbsoluteDoseCalibration.xml><BCVer="11.0.47"><1><4177773277>
+   OutputFactorTable:<002_CN_OutputFactorTable.xml><BCVer="11.0.47"><1><2374528758>
+   TMR_processed:<002_CN_TMR_processed.xml><BCVer="11.0.47"><1><692026183>
+   OPP_processed:<002_CN_OPP_processed.xml><BCVer="11.0.47"><1><1723568748>
+   TMR_calculated:<002_CN_TMR_calculated.xml><BCVer="11.0.47"><1><3775957921>
+   OPP_calculated:<002_CN_OPP_calculated.xml><BCVer="11.0.47"><1><1809097552>
+   ALL_histogram:<002_CN_ALL_histogram.xml><BCVer="11.0.47"><1><3147909905>
+   TMR_error:<002_CN_TMR_error.xml><BCVer="11.0.47"><1><28595243>
+   OPP_error:<002_CN_OPP_error.xml><BCVer="11.0.47"><1><1130146235>
+$EndOfDataSet
+$StartOfDataSet
+ Machine Code:<003>
+  General Parameters:<003.PARAM><><1><99031356>
+  Model Parameters:<003.MODEL><><1><4231524492>
+  AddOn:<CN>
+   TMR:<003_CN_TMR.xml><BCVer="11.0.47"><1><3886266871>
+   OPP:<003_CN_OPP.xml><BCVer="11.0.47"><1><988132708>
+   AbsoluteDoseCalibration:<003_CN_AbsoluteDoseCalibration.xml><BCVer="11.0.47"><1><1155368304>
+   OutputFactorTable:<003_CN_OutputFactorTable.xml><BCVer="11.0.47"><1><1970770139>
+   TMR_processed:<003_CN_TMR_processed.xml><BCVer="11.0.47"><1><703349179>
+   OPP_processed:<003_CN_OPP_processed.xml><BCVer="11.0.47"><1><1893980865>
+   TMR_calculated:<003_CN_TMR_calculated.xml><BCVer="11.0.47"><1><3529854106>
+   OPP_calculated:<003_CN_OPP_calculated.xml><BCVer="11.0.47"><1><2870255974>
+   ALL_histogram:<003_CN_ALL_histogram.xml><BCVer="11.0.47"><1><3156578099>
+   TMR_error:<003_CN_TMR_error.xml><BCVer="11.0.47"><1><3194147512>
+   OPP_error:<003_CN_OPP_error.xml><BCVer="11.0.47"><1><1815713316>
+$EndOfDataSet
+$StartOfDataSet
+ Machine Code:<004>
+  General Parameters:<004.PARAM><><1><3176944742>
+  Model Parameters:<004.MODEL><><1><4231524492>
+  AddOn:<CN>
+   TMR:<004_CN_TMR.xml><BCVer="11.0.47"><1><1634680568>
+   OPP:<004_CN_OPP.xml><BCVer="11.0.47"><1><1960125339>
+   AbsoluteDoseCalibration:<004_CN_AbsoluteDoseCalibration.xml><BCVer="11.0.47"><1><2859749245>
+   OutputFactorTable:<004_CN_OutputFactorTable.xml><BCVer="11.0.47"><1><1832160722>
+   TMR_processed:<004_CN_TMR_processed.xml><BCVer="11.0.47"><1><3104249285>
+   OPP_processed:<004_CN_OPP_processed.xml><BCVer="11.0.47"><1><3873521185>
+   TMR_calculated:<004_CN_TMR_calculated.xml><BCVer="11.0.47"><1><711474828>
+   OPP_calculated:<004_CN_OPP_calculated.xml><BCVer="11.0.47"><1><1497929786>
+   ALL_histogram:<004_CN_ALL_histogram.xml><BCVer="11.0.47"><1><2520864299>
+   TMR_error:<004_CN_TMR_error.xml><BCVer="11.0.47"><1><685087885>
+   OPP_error:<004_CN_OPP_error.xml><BCVer="11.0.47"><1><2401105518>
+$EndOfDataSet
+$StartOfDataSet
+ Machine Code:<005>
+  General Parameters:<005.PARAM><><1><43688867>
+  Model Parameters:<005.MODEL><><1><4231524492>
+  AddOn:<CN>
+   TMR:<005_CN_TMR.xml><BCVer="11.0.47"><1><828793904>
+   OPP:<005_CN_OPP.xml><BCVer="11.0.47"><1><168654316>
+   AbsoluteDoseCalibration:<005_CN_AbsoluteDoseCalibration.xml><BCVer="11.0.47"><1><2981278679>
+   OutputFactorTable:<005_CN_OutputFactorTable.xml><BCVer="11.0.47"><1><3057472170>
+   TMR_processed:<005_CN_TMR_processed.xml><BCVer="11.0.47"><1><310603070>
+   OPP_processed:<005_CN_OPP_processed.xml><BCVer="11.0.47"><1><648559275>
+   TMR_calculated:<005_CN_TMR_calculated.xml><BCVer="11.0.47"><1><2951978462>
+   OPP_calculated:<005_CN_OPP_calculated.xml><BCVer="11.0.47"><1><3476419204>
+   ALL_histogram:<005_CN_ALL_histogram.xml><BCVer="11.0.47"><1><867797014>
+   TMR_error:<005_CN_TMR_error.xml><BCVer="11.0.47"><1><3019257088>
+   OPP_error:<005_CN_OPP_error.xml><BCVer="11.0.47"><1><2672219480>
+$EndOfDataSet
+$EndOfMapFile

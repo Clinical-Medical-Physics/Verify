@@ -12,7 +12,7 @@ namespace SRSConeMUVerify.Utilities
 {
    public class DatabaseXmlReader
    {
-      public string XmlFile { get; private set; }
+      public string XmlFile { get; set; }
       public string ServerName { get; set; }
       public string AppDirectory { get; set; }
       public string ResourceDirectory { get; private set; }
@@ -40,7 +40,7 @@ namespace SRSConeMUVerify.Utilities
          }
          catch
          {
-            MessageBox.Show("Unable to copy Calculation File to Resource Folder");
+            MessageBox.Show("Unable to copy Calculation File to Resource Folder. Find CalculationModels.xml Manually!");
          }
          return false;
       }
