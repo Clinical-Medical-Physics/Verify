@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -37,7 +38,9 @@ namespace SRSConeMUVerify.ViewModels
       public ConfigurationViewModel(AppConfigModel appConfigModel, IEventAggregator eventAggregator)
       {
          AppConfigModel = appConfigModel;
-         AppDirectory = Environment.CurrentDirectory;
+
+         //AppDirectory = Environment.CurrentDirectory;
+         AppDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
          EclipseDataChecked = new DelegateCommand(OnEclipseDataChecked);
          CSVDataChecked = new DelegateCommand(OnCSVDataChecked);
          ImportXmlFromServer = new DelegateCommand(OnImportXmlFromServer);
@@ -66,6 +69,7 @@ namespace SRSConeMUVerify.ViewModels
       private bool GetConfigurationInfo()
       {
 
+         //MessageBox.Show($"AppDir= {AppDirectory}");
          string resourceFolder = Path.Combine(AppDirectory, "Resources");
          string appConfigFile = Path.Combine(resourceFolder, "AppConfig.json");
 

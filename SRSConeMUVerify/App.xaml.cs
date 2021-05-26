@@ -27,8 +27,10 @@ namespace SRSConeMUVerify
          try
          {
             // TODO need to remove the null, null for versions > 11
+            
             using (_app = VMS.TPS.Common.Model.API.Application.CreateApplication(null, null))
             {
+               
                if (e.Args.Count() > 0 && !String.IsNullOrEmpty(e.Args.FirstOrDefault()))
                {
                   if (e.Args.First().Contains(';'))
@@ -68,9 +70,9 @@ namespace SRSConeMUVerify
 
             }
          }
-         catch
+         catch (Exception ex)
          {
-            MessageBox.Show("Could not introduce application");
+            MessageBox.Show($"Could not introduce application: {ex.Message}");
             // TODO is this necessary or is there a better way
             App.Current.Shutdown();
          }
