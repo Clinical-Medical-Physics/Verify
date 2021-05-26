@@ -119,11 +119,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Events\ConfigViewCloseEvent.cs" />
     <Compile Include="Events\PlanSelectedEvent.cs" />
+    <Compile Include="Models\AbsDoseXmlModel.cs" />
     <Compile Include="Models\AppConfigModel.cs" />
     <Compile Include="Models\CalcModelModel.cs" />
     <Compile Include="Models\ConfiguredModel.cs" />
     <Compile Include="Models\CourseModel.cs" />
+    <Compile Include="Models\MachineModel.cs" />
     <Compile Include="Models\MapfileModel.cs" />
     <Compile Include="Models\PlanModel.cs" />
     <Compile Include="Models\TMRModel.cs" />

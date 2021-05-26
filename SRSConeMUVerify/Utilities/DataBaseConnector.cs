@@ -16,7 +16,7 @@ namespace SRSConeMUVerify.Utilities
       /// <returns>The TMR information, model id is not unique!</returns>
       public TMRModel CreateTMR(TMRModel model)
       {
-         model.Id = 1;
+         model.ConeSize = "CC";
          return model;
       }
    }

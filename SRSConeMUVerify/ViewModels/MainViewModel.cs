@@ -8,7 +8,8 @@ namespace SRSConeMUVerify.ViewModels
 {
    public class MainViewModel
    {
-      public MainViewModel(ConfigurationViewModel configurationViewModel,
+      // TODO where to these get passed in Are they ever passed in
+      public MainViewModel(ConfigurationViewModel configurationViewModel, // TODO do I need this one if navigationviewmodel needs it
          NavigationViewModel navigationViewModel,
          PlanInformationViewModel planInformationViewModel,//PlaninfoVM must be before plan Nav VM for eventing.
          PlanNavigationViewModel planNavigationViewModel)

@@ -62,6 +62,7 @@ namespace SRSConeMUVerify
                var bootstrapper = new Bootstrapper();
                var container = bootstrapper.Bootstrap(patient, course, plan);
                var mv = container.Resolve<MainView>();
+               //  TODO what does resolve do?
                mv.DataContext = container.Resolve<MainViewModel>();
                mv.ShowDialog();
 
@@ -70,6 +71,7 @@ namespace SRSConeMUVerify
          catch
          {
             MessageBox.Show("Could not introduce application");
+            // TODO is this necessary or is there a better way
             App.Current.Shutdown();
          }
       }

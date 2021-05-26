@@ -3,6 +3,7 @@ using SRSConeMUVerify.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -68,7 +69,7 @@ namespace SRSConeMUVerify.Models
          get { return _calcModelModels; }
          set { SetProperty(ref _calcModelModels, value); }
       }
-
+      
       private CalcModelModel _selectedCalcModel;
 
       public CalcModelModel SelectedCalcModel
@@ -84,12 +85,58 @@ namespace SRSConeMUVerify.Models
          get { return _mapfileModel; }
          set { SetProperty(ref _mapfileModel,  value); }
       }
+      private ObservableCollection<MachineModel> _machineModels;
+
+      public ObservableCollection<MachineModel> MachineModels
+      {
+         get { return _machineModels; }
+         set { SetProperty(ref _machineModels, value); }
+      }
+      private MachineModel _selectedMachineModel;
+
+      public MachineModel SelectedMachineModel
+      {
+         get { return _selectedMachineModel; }
+         set {
+            SetProperty(ref _selectedMachineModel, value);
+            if (_selectedMachineModel is null)
+            {
+
+            }
+            else
+            {
+               TMRModels = new ObservableCollection<TMRModel>();
+               foreach (TMRModel tmr in _selectedMachineModel.TMRModels)
+               {
+                  TMRModels.Add(tmr);
+               }
+            }
+         }
+      }
+      private ObservableCollection<TMRModel> _tMRModels;
+
+      public ObservableCollection<TMRModel> TMRModels
+      {
+         get { return _tMRModels; }
+         set { SetProperty(ref _tMRModels, value); }
+      }
+
+      private TMRModel _selectedTMRModel;
+
+      public TMRModel SelectedTMRModel
+      {
+         get { return _selectedTMRModel; }
+         set { SetProperty(ref _selectedTMRModel, value); }
+      }
       public AppConfigModel()
       {
-         Server = "undefined";
+         
+         Server = ConfigurationManager.AppSettings["dcfAddress"];
          IsServerData = false;
          IsCSVData = false;
          CalcModelModels = new ObservableCollection<CalcModelModel>();
+         MachineModels = new ObservableCollection<MachineModel>();
+         TMRModels = new ObservableCollection<TMRModel>();
       }
       public void CalcModelToTable()
       {

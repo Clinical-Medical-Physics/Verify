@@ -14,8 +14,8 @@
         </Grid.RowDefinitions>
         <local:NavigationView DataContext="{Binding NavigationViewModel}"/>
         <DockPanel Grid.Row="1">
-            <local:PlanInformationView DataContext="{Binding PlanInformationViewModel}" DockPanel.Dock="Top"/>
-            <local:PlanNavigationView DataContext="{Binding PlanNavigationViewModel}" DockPanel.Dock="Left"/>
+            <local:PlanInformationView Margin="5" DataContext="{Binding PlanInformationViewModel}" DockPanel.Dock="Top"/>
+            <local:PlanNavigationView MinWidth="100" Margin="5" DataContext="{Binding PlanNavigationViewModel}" DockPanel.Dock="Left"/>
             <local:MUCheckView DockPanel.Dock="Right"/>
         </DockPanel>
     </Grid>

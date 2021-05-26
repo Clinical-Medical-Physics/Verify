@@ -1,6 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,13 +11,32 @@ namespace SRSConeMUVerify.Models
 
    public class TMRModel : BindableBase
    {
-      public int Id { get; set; }
-      public string ConeSize { get; set; }
-      public string Energy { get; set; }
-      public List<TMRDataPoint> DataPoints { get; set; }
+      private string _coneSize;
+
+      public string ConeSize
+      {
+         get { return _coneSize; }
+         set { SetProperty(ref _coneSize , value); }
+      }
+      private double _outputFactor;
+
+      public double OutputFactor
+      {
+         get { return _outputFactor; }
+         set { SetProperty(ref _outputFactor , value); }
+      }
+      private ObservableCollection<TMRDataPoint> _dataPoints;
+
+      public ObservableCollection<TMRDataPoint> DataPoints
+      {
+         get { return _dataPoints; }
+         set { SetProperty(ref _dataPoints, value); }
+      }
+
+      
       public TMRModel()
       {
-         DataPoints = new List<TMRDataPoint>();
+         DataPoints = new ObservableCollection<TMRDataPoint>();
       }
    }
    public class TMRDataPoint

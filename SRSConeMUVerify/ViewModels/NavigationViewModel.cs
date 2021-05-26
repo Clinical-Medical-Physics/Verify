@@ -1,4 +1,6 @@
 ﻿using Prism.Commands;
+using Prism.Events;
+using SRSConeMUVerify.Events;
 using SRSConeMUVerify.Models;
 using SRSConeMUVerify.Views;
 using System;
@@ -14,15 +16,26 @@ namespace SRSConeMUVerify.ViewModels
    {
       public ConfigurationViewModel ConfigurationViewModel { get; set; }
       public DelegateCommand LaunchConfigurationCommand { get; private set; }
-      public NavigationViewModel(ConfigurationViewModel configurationViewModel)
+      public IEventAggregator _eventAggregator;
+      public ConfigurationView configurationView { get; set; }
+      
+      public NavigationViewModel(ConfigurationViewModel configurationViewModel, IEventAggregator eventAggregator)
       {
          ConfigurationViewModel = configurationViewModel;
          LaunchConfigurationCommand = new DelegateCommand(OnLaunchConfiguration);
+         
+         _eventAggregator = eventAggregator;
+         _eventAggregator.GetEvent<ConfigViewCloseEvent>().Subscribe(Closer);
+         if(ConfigurationViewModel.IsConfigured == false)
+         {
+            MessageBox.Show("First Run...Opening Configuration!");
+            OnLaunchConfiguration();
+         }
       }
 
       private void OnLaunchConfiguration()
       {
-         
+         bool continueAnyway = false;
          MessageBoxResult userAnswer = new MessageBoxResult();
          if (ConfigurationViewModel.IsConfigured)
          {
@@ -32,18 +45,24 @@ namespace SRSConeMUVerify.ViewModels
                MessageBoxImage.Warning);
             if (userAnswer.ToString() == "Yes")
             {
-               var configView = new ConfigurationView();
-               configView.DataContext = new ConfigurationViewModel(new AppConfigModel());
-               configView.ShowDialog();
+               continueAnyway = true;
             }
          }
          else
          {
-            var configView = new ConfigurationView();
-            configView.DataContext = new ConfigurationViewModel(new AppConfigModel());
-            configView.ShowDialog();
+            continueAnyway = true;
          }
-         
+         if (continueAnyway)
+         {
+            configurationView = new ConfigurationView();
+            configurationView.DataContext = ConfigurationViewModel;
+            configurationView.ShowDialog();
+         }
+      }
+      public void Closer(bool close)
+      {
+         configurationView.Close();
+         configurationView = null;
       }
    }
 }

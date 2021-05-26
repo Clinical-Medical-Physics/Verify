@@ -30,7 +30,7 @@ namespace SRSConeMUVerify.Utilities
          while (continueToRead)
          {
             var line = lines[i];
-            Console.WriteLine(line);
+            //Console.WriteLine(line);
             switch (line)
             {
                case @"$StartOfCodeSet":
