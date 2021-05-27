@@ -156,7 +156,7 @@ namespace SRSConeMUVerify.ViewModels
       }
       private void OnImportXmlFromServer()
       {
-         
+
          //AppConfigModel.Server is bound to the textbox
          databaseXmlReader = new DatabaseXmlReader(AppConfigModel.Server, AppDirectory);
          if (databaseXmlReader.CopyCalcModel())
@@ -227,6 +227,9 @@ namespace SRSConeMUVerify.ViewModels
                   }
 
                }
+               //don't know which oder these things are in do have to connect output factors and tmrdata later
+               machineModel.ConnectOutputFactorsTMRs();
+               machineModel.ConnectTmrCurveTMR();
                AppConfigModel.MachineModels.Add(machineModel);
             }
          }
@@ -234,11 +237,86 @@ namespace SRSConeMUVerify.ViewModels
 
       private void readTmrXml(MachineModel machineModel, FileInfo fileInfo)
       {
+         try
+         {
 
+            var tmrData = XElement.Load(fileInfo.FullName);
+            var tmrCurves = tmrData.Descendants("Curve");
+            var tmrParams = tmrData.Descendants("Parameter");
+            TmrXmlModel tmrXmlModel = new TmrXmlModel();
+            foreach (XElement element in tmrParams)
+            {
+               string id = element.Attribute("Id").Value;
+               string value = element.Attribute("Value").Value;
+               if (id == "SourceDetectorDistance")
+               {
+                  tmrXmlModel.SourceDetectorDistance = value;
+               }
+               else if (id == "ImportedFromFastPlan")
+               {
+                  tmrXmlModel.ImportedFromFastPlan = value;
+               }
+            }
+            foreach (XElement element in tmrCurves)
+            {
+
+               string id = element.Attribute("Id").Value;
+               string fieldSize = element.Attribute("FieldSize").Value;
+               //MessageBox.Show($"{fileInfo.Name} Id= {id} FS= {fieldSize}");
+               string values = element.Value;
+               TmrXmlModel.TmrCurve tmrCurve = new TmrXmlModel.TmrCurve();
+               tmrCurve.Id = id;
+               tmrCurve.FieldSize = fieldSize;
+               tmrCurve.Values = values;
+               tmrXmlModel.TmrCurves.Add(tmrCurve);
+            }
+            machineModel.TmrXmlModels.Add(tmrXmlModel);
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show(ex.Message);
+         }
+         
       }
 
       private void readOutputFactorTableXml(MachineModel machineModel, FileInfo fileInfo)
       {
+         var outputFactorData = XElement.Load(fileInfo.FullName);
+         var outputFactorRows = outputFactorData.Descendants("Row");
+         var outputFactorParams = outputFactorData.Descendants("Parameter");
+         OutputFacXmlModel outputFacXmlModel = new OutputFacXmlModel();
+         foreach (XElement element in outputFactorParams)
+         {
+            string id = element.Attribute("Id").Value;
+            string value = element.Attribute("Value").Value;
+            if (id == "SourcePhantomDistance")
+            {
+               outputFacXmlModel.SourcePhantomDistance = value;
+            }
+            else if (id == "DetectorDepth")
+            {
+               outputFacXmlModel.DetectorDepth = value;
+            }
+            else if (id == "JawOpening")
+            {
+               outputFacXmlModel.JawOpening = value;
+            }
+            else if (id == "ImportedFromFastPlan")
+            {
+               outputFacXmlModel.ImportedFromFastPlan = value;
+            }
+         }
+
+         foreach (XElement element in outputFactorRows)
+         {
+            OutputFacXmlModel.OutPutFactor outPutFactor = new OutputFacXmlModel.OutPutFactor();
+            string[] valueSplit = element.Value.Split(';');
+            outPutFactor.ConeSize = Convert.ToDouble(valueSplit[0]);
+            outPutFactor.OutputFactorValue = Convert.ToDouble(valueSplit[1]);
+            outputFacXmlModel.OutPutFactors.Add(outPutFactor);
+
+         }
+         machineModel.OutputFactorModel.Add(outputFacXmlModel);
 
       }
 
@@ -247,7 +325,7 @@ namespace SRSConeMUVerify.ViewModels
          var absDoseCalData = XElement.Load(fileInfo.FullName);
          var absDoseParameters = absDoseCalData.Descendants("Parameter");
          AbsDoseXmlModel absDoseXmlModel = new AbsDoseXmlModel();
-         foreach(XElement element in absDoseParameters)
+         foreach (XElement element in absDoseParameters)
          {
             string id = element.Attribute("Id").Value;
             string value = element.Attribute("Value").Value;
@@ -280,7 +358,7 @@ namespace SRSConeMUVerify.ViewModels
          }
          //MessageBox.Show($"{absDoseXmlModel.AbsDoseMeasurementMU} {absDoseXmlModel.AbsDoseMeasurementGy}");
          machineModel.AbsoluteDoseCalibration = absDoseXmlModel.AbsoluteDoseCalibration();
-         
+
       }
 
       private void readCodeSetfile(MachineModel machineModel, FileInfo fileInfo)

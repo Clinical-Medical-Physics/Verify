@@ -131,8 +131,10 @@
     <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Models\MachineModel.cs" />
     <Compile Include="Models\MapfileModel.cs" />
+    <Compile Include="Models\OutputFacXmlModel.cs" />
     <Compile Include="Models\PlanModel.cs" />
     <Compile Include="Models\TMRModel.cs" />
+    <Compile Include="Models\TmrXmlModel.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="Utilities\Calculations.cs" />
     <Compile Include="Utilities\CsvConnector.cs" />
