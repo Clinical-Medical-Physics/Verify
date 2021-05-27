@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using VMS.TPS.Common.Model.API;
 
 namespace SRSConeMUVerify.ViewModels
@@ -50,6 +51,7 @@ namespace SRSConeMUVerify.ViewModels
 			if (obj != null)
 			{
 				var plan = _patient.Courses.FirstOrDefault(x => x.Id == obj.CourseId).PlanSetups.FirstOrDefault(x => x.Id == obj.PlanId);
+				MessageBox.Show("In OnPlanSelected PlanInfoViewModel");
 				SelectedPlanId = plan.Id;
 				TreatmentPercentage = plan.PrescribedPercentage * 100.0;
 			}

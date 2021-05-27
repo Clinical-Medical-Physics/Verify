@@ -7,16 +7,17 @@
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="Cone Planning MU Check Report" Height="900" Width="1200">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <local:NavigationView DataContext="{Binding NavigationViewModel}"/>
-        <DockPanel Grid.Row="1">
-            <local:PlanInformationView Margin="5" DataContext="{Binding PlanInformationViewModel}" DockPanel.Dock="Top"/>
-            <local:PlanNavigationView MinWidth="100" Margin="5" DataContext="{Binding PlanNavigationViewModel}" DockPanel.Dock="Left"/>
-            <local:MUCheckView DockPanel.Dock="Right"/>
-        </DockPanel>
-    </Grid>
+   <Grid>
+      <Grid.RowDefinitions>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <local:NavigationView DataContext="{Binding NavigationViewModel}"/>
+      
+      <DockPanel Grid.Row="1">
+         <local:PlanInformationView Margin="5" DataContext="{Binding PlanInformationViewModel}" DockPanel.Dock="Top"/>
+         <local:PlanNavigationView MinWidth="100" Margin="5" DataContext="{Binding PlanNavigationViewModel}" DockPanel.Dock="Left"/>
+         <local:MUCheckView DockPanel.Dock="Right" DataContext="{Binding MUCheckViewModel}"/>
+      </DockPanel>
+   </Grid>
 </metro:MetroWindow>

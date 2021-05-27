@@ -123,10 +123,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Events\ConfigViewCloseEvent.cs" />
+    <Compile Include="Events\MessageViewCloseEvent.cs" />
+    <Compile Include="Events\MessageViewOkEvent.cs" />
     <Compile Include="Events\PlanSelectedEvent.cs" />
     <Compile Include="Models\AbsDoseXmlModel.cs" />
     <Compile Include="Models\AppConfigModel.cs" />
     <Compile Include="Models\CalcModelModel.cs" />
+    <Compile Include="Models\CheckedBeamModel.cs" />
     <Compile Include="Models\ConfiguredModel.cs" />
     <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Models\MachineModel.cs" />
@@ -145,9 +148,14 @@
     <Compile Include="Utilities\TmrXmlReader.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
+    <Compile Include="ViewModels\MUCheckViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\PlanInformationViewModel.cs" />
     <Compile Include="ViewModels\PlanNavigationViewModel.cs" />
+    <Compile Include="Views\MessageView.xaml.cs">
+      <DependentUpon>MessageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
@@ -214,6 +222,10 @@
     <Resource Include="Resources\SRSCalculationModels.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\MessageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ConfigurationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

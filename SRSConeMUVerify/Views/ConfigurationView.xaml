@@ -23,9 +23,9 @@
          <Label Content="Enter Server name where DCF folder resides:" Margin="5"/>
          <TextBox Margin="5" Text="{Binding AppConfigModel.Server}" />
          <Button Content="Find Calculation Models" Width="150" Command="{Binding ImportXmlFromServer}"/>
-         <DataGrid Margin="5" ItemsSource="{Binding AppConfigModel.CalcModelModels}" SelectedItem="{Binding AppConfigModel.SelectedCalcModel}"/>
+         <DataGrid IsReadOnly="True" Margin="5" ItemsSource="{Binding AppConfigModel.CalcModelModels}" SelectedItem="{Binding AppConfigModel.SelectedCalcModel}"/>
          <Button Content="Import Selected Model" Width="150" Command="{Binding ImportCalcModelData}"/>
-         <DataGrid Margin="5" ItemsSource="{Binding ConfiguredModel}"/>
+         <DataGrid IsReadOnly="True" Margin="5" ItemsSource="{Binding ConfiguredModel}"/>
          <Button Content="Save and Close" Width="150" Visibility="{Binding IsConfigured}" Command="{Binding SaveAppConfigJson}"/>
       </StackPanel>
       <StackPanel Grid.Row="2" Orientation="Vertical" IsEnabled="{Binding AppConfigModel.IsCSVData}">
@@ -40,22 +40,23 @@
          <Label Content="Imported TMR and Cone Factors"/>
          <StackPanel Orientation="Horizontal">
 
-            <DataGrid ItemsSource="{Binding AppConfigModel.MachineModels}" AutoGenerateColumns="False" SelectedItem="{Binding AppConfigModel.SelectedMachineModel}" MaxHeight="250" MaxWidth="400" >
+            <DataGrid IsReadOnly="True" Margin="5" ItemsSource="{Binding AppConfigModel.MachineModels}" AutoGenerateColumns="False" SelectedItem="{Binding AppConfigModel.SelectedMachineModel}" MaxHeight="250" MaxWidth="400" >
                <DataGrid.Columns>
                   <DataGridTextColumn Header="Machine Code" Binding="{Binding Id}"/>
                   <DataGridTextColumn Header="Machine Name" Binding="{Binding Name}"/>
                   <DataGridTextColumn Header="Energy" Binding="{Binding Energy}"/>
                   <DataGridTextColumn Header="AbsDoseCal" Binding="{Binding AbsoluteDoseCalibration, StringFormat=N4}"/>
+                  <DataGridTextColumn Header="OutPutFactor" Binding="{Binding OutputFactor, StringFormat=N4}"/>
                </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid ItemsSource="{Binding AppConfigModel.TMRModels}" AutoGenerateColumns="False" SelectedItem="{Binding AppConfigModel.SelectedTMRModel}" MaxHeight="250" MaxWidth="400">
+            <DataGrid IsReadOnly="True" Margin="5" ItemsSource="{Binding AppConfigModel.TMRModels}" AutoGenerateColumns="False" SelectedItem="{Binding AppConfigModel.SelectedTMRModel}" MaxHeight="250" MaxWidth="400">
                <DataGrid.Columns>
                   <DataGridTextColumn Header="Cone Id" Binding="{Binding ConeSize}"/>
                   <DataGridTextColumn Header="Output Factor" Binding="{Binding OutputFactor, StringFormat=N4}"/>
                </DataGrid.Columns>
             </DataGrid>
-            <DataGrid ItemsSource="{Binding AppConfigModel.SelectedTMRModel.DataPoints}" AutoGenerateColumns="False" MaxHeight="250" MaxWidth="400">
+            <DataGrid IsReadOnly="True" Margin="5" ItemsSource="{Binding AppConfigModel.SelectedTMRModel.DataPoints}" AutoGenerateColumns="False" MaxHeight="250" MaxWidth="400">
                <DataGrid.Columns>
                   <DataGridTextColumn Header="Depth" Binding="{Binding Depth, StringFormat=N2}"/>
                   <DataGridTextColumn Header="TMR" Binding="{Binding TMRValue, StringFormat=N4}"/>
