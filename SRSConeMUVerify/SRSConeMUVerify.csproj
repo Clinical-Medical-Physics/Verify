@@ -126,6 +126,7 @@
     <Compile Include="Events\MessageViewCloseEvent.cs" />
     <Compile Include="Events\MessageViewOkEvent.cs" />
     <Compile Include="Events\PlanSelectedEvent.cs" />
+    <Compile Include="Events\RefDEnteredEvent.cs" />
     <Compile Include="Models\AbsDoseXmlModel.cs" />
     <Compile Include="Models\AppConfigModel.cs" />
     <Compile Include="Models\CalcModelModel.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Models\MapfileModel.cs" />
     <Compile Include="Models\OutputFacXmlModel.cs" />
     <Compile Include="Models\PlanModel.cs" />
+    <Compile Include="Models\PlanPrescriptionModel.cs" />
     <Compile Include="Models\TMRModel.cs" />
     <Compile Include="Models\TmrXmlModel.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />

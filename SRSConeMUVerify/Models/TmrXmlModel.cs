@@ -13,6 +13,7 @@ namespace SRSConeMUVerify.Models
       public string ImportedFromFastPlan { get; set; }
 
       public List<TmrCurve> TmrCurves { get; set; }
+      public List<TmrCurve> TmrCalcCurves { get; set; }
       public TmrXmlModel()
       {
          TmrCurves = new List<TmrCurve>();

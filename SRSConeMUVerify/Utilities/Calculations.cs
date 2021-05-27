@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using VMS.TPS.Common.Model.API;
 
 namespace SRSConeMUVerify.Utilities
 {
@@ -55,20 +56,28 @@ namespace SRSConeMUVerify.Utilities
          return interpretedValue;
       }
       public static CheckedBeamModel CalculateCheckBeam(CheckedBeamModel checkedBeam, 
-         ObservableCollection<MachineModel> machineModels)
+         ObservableCollection<MachineModel> machineModels,
+         PlanPrescriptionModel planPrescriptionModel)
       {
          //
        
-         CheckedBeamModel _checkedbeam = new CheckedBeamModel();
+         
          MachineModel _machineModel = machineModels.Where(x => x.Name == checkedBeam.Machine && x.Energy == checkedBeam.Energy).First();
-         MessageBox.Show($"{_machineModel.Name} {_machineModel.Energy} {_machineModel.AbsoluteDoseCalibration}");
+         
          TMRModel tmrModel = _machineModel.TMRModels.Where(x => x.ConeSize == checkedBeam.ConeSize).FirstOrDefault();
-         MessageBox.Show($"{tmrModel.ConeSize} {tmrModel.OutputFactor}");
+         
          TMRDataPoint tmrDataPoint1 = tmrModel.DataPoints
             .Where(x => x.Depth <= checkedBeam.AverageDepth).Last();
          TMRDataPoint tmrDataPoint2 = tmrModel.DataPoints
             .Where(x => x.Depth >= checkedBeam.AverageDepth).First();
          MessageBox.Show($"{tmrDataPoint1.Depth} {checkedBeam.AverageDepth} {tmrDataPoint2.Depth}");
+         InterpretedValue tmrValue = LinearInterpolation(tmrDataPoint1.Depth, tmrDataPoint1.TMRValue, tmrDataPoint2.Depth,
+            tmrDataPoint2.TMRValue, checkedBeam.AverageDepth);
+         MessageBox.Show($"{tmrDataPoint1.TMRValue} {tmrValue.value} {tmrDataPoint2.TMRValue}");
+         checkedBeam.TMRValue = tmrValue.value;
+         checkedBeam.OutputFactor = tmrModel.OutputFactor;
+         
+
          return new CheckedBeamModel();
       }
    }

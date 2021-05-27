@@ -221,9 +221,13 @@ namespace SRSConeMUVerify.ViewModels
                   {
                      readOutputFactorTableXml(machineModel, fileInfo);
                   }
-                  else if (fileInfo.Name == $"{machineModel.Id}_CN_TMR.xml")
+                  else if (fileInfo.Name == $"{machineModel.Id}_CN_TMR_processed.xml")
                   {
-                     readTmrXml(machineModel, fileInfo);
+                     readTmrXml(machineModel, fileInfo,"processed");
+                  }
+                  else if (fileInfo.Name == $"{machineModel.Id}_CN_TMR_calculated.xml")
+                  {
+                     readTmrXml(machineModel, fileInfo,"calculated");
                   }
 
                }
@@ -235,7 +239,7 @@ namespace SRSConeMUVerify.ViewModels
          }
       }
 
-      private void readTmrXml(MachineModel machineModel, FileInfo fileInfo)
+      private void readTmrXml(MachineModel machineModel, FileInfo fileInfo,string procOrCalc)
       {
          try
          {
@@ -268,7 +272,14 @@ namespace SRSConeMUVerify.ViewModels
                tmrCurve.Id = id;
                tmrCurve.FieldSize = fieldSize;
                tmrCurve.Values = values;
-               tmrXmlModel.TmrCurves.Add(tmrCurve);
+               if (procOrCalc == "calculated")
+               {
+                  tmrXmlModel.TmrCalcCurves.Add(tmrCurve);
+               }
+               else
+               {
+                  tmrXmlModel.TmrCurves.Add(tmrCurve);
+               }
             }
             machineModel.TmrXmlModels.Add(tmrXmlModel);
          }
@@ -413,8 +424,11 @@ namespace SRSConeMUVerify.ViewModels
             File.Copy(Path.Combine(machineBeamDataDirectory, absDoseCalFile), Path.Combine(machineDirectoryInfo.FullName, absDoseCalFile), true);
             string outputFactorFile = GetStringBetweenTag(dataset.OutputFactorTable, '<', '>');
             File.Copy(Path.Combine(machineBeamDataDirectory, outputFactorFile), Path.Combine(machineDirectoryInfo.FullName, outputFactorFile), true);
-            string tmrFile = GetStringBetweenTag(dataset.TMR, '<', '>');
+            string tmrFile = GetStringBetweenTag(dataset.TMR_processed, '<', '>');
             File.Copy(Path.Combine(machineBeamDataDirectory, tmrFile), Path.Combine(machineDirectoryInfo.FullName, tmrFile), true);
+            string tmrCalculatedFile = GetStringBetweenTag(dataset.TMR_calculated, '<', '>');
+            File.Copy(Path.Combine(machineBeamDataDirectory, tmrFile), Path.Combine(machineDirectoryInfo.FullName, tmrCalculatedFile), true);
+
             //MessageBox.Show(outputFactorFile);
          }
 

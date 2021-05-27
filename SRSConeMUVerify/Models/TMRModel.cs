@@ -32,8 +32,14 @@ namespace SRSConeMUVerify.Models
          get { return _dataPoints; }
          set { SetProperty(ref _dataPoints, value); }
       }
+      private ObservableCollection<TMRDataPoint> _dataCalcPoints;
 
-      
+      public ObservableCollection<TMRDataPoint> DataCalcPoints
+      {
+         get { return _dataCalcPoints; }
+         set { SetProperty(ref _dataCalcPoints, value); }
+      }
+
       public TMRModel()
       {
          DataPoints = new ObservableCollection<TMRDataPoint>();

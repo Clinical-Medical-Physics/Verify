@@ -104,38 +104,54 @@ namespace SRSConeMUVerify.Models
                foreach (TmrXmlModel tmrXmlModel in TmrXmlModels)
                {
                   //MessageBox.Show($"3");
-                  foreach (TmrXmlModel.TmrCurve tmrcurve in tmrXmlModel.TmrCurves)
-                  {
-                     //MessageBox.Show($"4");
-                     double coneValueXml = Convert.ToDouble(tmrcurve.FieldSize);
-                     if (coneValue == coneValueXml)
-                     {
-                        //MessageBox.Show($"5");
-                        string[] values = tmrcurve.Values.Split(';');
-                        foreach (var value in values)
-                        {
-                           //MessageBox.Show($"6 {value}");
-                           TMRDataPoint tMRDataPoint = new TMRDataPoint();
-                           try
-                           {
-                              string[] depthTMR = value.Split(',');
-                              tMRDataPoint.Depth = Convert.ToDouble(depthTMR[0]);
-                              tMRDataPoint.TMRValue = Convert.ToDouble(depthTMR[1]);
-                              tmr.DataPoints.Add(tMRDataPoint);
-                           }
-                           catch
-                           {
-
-                           }
-                        }
-                     }
-                  }
+                  List<TmrXmlModel.TmrCurve> tmrCurves = tmrXmlModel.TmrCurves;
+                  List<TmrXmlModel.TmrCurve> tmrCalcCurves = tmrXmlModel.TmrCalcCurves;
+                  tmrCurvesToPoints(coneValue, tmrCurves, "processed", tmr);
+                  tmrCurvesToPoints(coneValue, tmrCalcCurves, "calculated", tmr);
                }
             }
          }
          catch (Exception ex)
          {
             MessageBox.Show(ex.Message);
+         }
+      }
+      private void tmrCurvesToPoints(double coneValue,List<TmrXmlModel.TmrCurve> tmrCurves,string procOrCalc, TMRModel tmr)
+      {
+         foreach (TmrXmlModel.TmrCurve tmrcurve in tmrCurves)
+         {
+            //MessageBox.Show($"4");
+            double coneValueXml = Convert.ToDouble(tmrcurve.FieldSize);
+            if (coneValue == coneValueXml)
+            {
+               //MessageBox.Show($"5");
+               string[] values = tmrcurve.Values.Split(';');
+               foreach (var value in values)
+               {
+                  //MessageBox.Show($"6 {value}");
+                  TMRDataPoint tMRDataPoint = new TMRDataPoint();
+                  try
+                  {
+                     string[] depthTMR = value.Split(',');
+                     tMRDataPoint.Depth = Convert.ToDouble(depthTMR[0]);
+                     tMRDataPoint.TMRValue = Convert.ToDouble(depthTMR[1]);
+                     if (procOrCalc == "calculated")
+                     {
+                        tmr.DataCalcPoints.Add(tMRDataPoint);
+                     }
+                     else
+                     {
+                        tmr.DataPoints.Add(tMRDataPoint);
+                     }
+                     
+                  }
+                  catch
+                  {
+
+                  }
+               }
+            }
+
          }
       }
       // TODO add conversion of output factor to dmax 

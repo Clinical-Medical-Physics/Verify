@@ -27,6 +27,13 @@ namespace SRSConeMUVerify.ViewModels
          get { return _plan; }
          set { SetProperty(ref _plan, value); }
       }
+      private PlanPrescriptionModel _planPrescriptionModel;
+
+      public PlanPrescriptionModel PlanPrescriptionModel
+      {
+         get { return _planPrescriptionModel; }
+         set { SetProperty(ref _planPrescriptionModel,value); }
+      }
 
       private ObservableCollection<CheckedBeamModel> _checkedBeams;
 
@@ -55,6 +62,13 @@ namespace SRSConeMUVerify.ViewModels
          //MessageBox.Show("In OnPlanSeleced");
          _checkedBeams = null;
          _checkedBeams = new ObservableCollection<CheckedBeamModel>();
+         List<Beam> beams = _plan.Beams.Where(x => x.IsSetupField == false).ToList();
+         //double totalWeight = beams.Sum(x => x.WeightFactor);
+         //_planPrescriptionModel = new PlanPrescriptionModel(_plan.UniqueFractionation.PrescribedDosePerFraction.Dose
+         //   ,Convert.ToDouble(_plan.UniqueFractionation.NumberOfFractions),_plan.TotalPrescribedDose.Dose,
+         //   _plan.PrescribedPercentage,totalWeight,_plan.Dose.DoseMax3D.Dose,
+         //   _plan.Dose.GetDoseToPoint(beams.First().IsocenterPosition).Dose);
+
          if (obj != null)
          {
             _plan = _patient.Courses.FirstOrDefault(x => x.Id == obj.CourseId).PlanSetups.FirstOrDefault(x => x.Id == obj.PlanId);
@@ -69,8 +83,9 @@ namespace SRSConeMUVerify.ViewModels
                checkedBeam.WeightFactor = beam.WeightFactor;
 
                checkedBeam.TPSMU = beam.Meterset.Value;
+               
                _checkedBeams.Add(checkedBeam);
-               Calculations.CalculateCheckBeam(checkedBeam,MachineModels);
+               //Calculations.CalculateCheckBeam(checkedBeam,MachineModels,_planPrescriptionModel);
             }
             
          }
