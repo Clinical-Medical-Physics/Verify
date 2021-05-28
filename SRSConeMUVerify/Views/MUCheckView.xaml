@@ -8,6 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
    <Grid>
       <DataGrid ItemsSource="{Binding CheckedBeams}" AutoGenerateColumns="False">
+         
          <DataGrid.Columns>
             <DataGridTextColumn Header="Field Id" Binding="{Binding Id}"/>
             <DataGridTextColumn Header="Energy" Binding="{Binding Energy}"/>

@@ -255,4 +255,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+   <PropertyGroup>
+      <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
+   </PropertyGroup>
 </Project>

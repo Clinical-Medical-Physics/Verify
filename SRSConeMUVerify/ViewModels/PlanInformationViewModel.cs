@@ -55,6 +55,11 @@ namespace SRSConeMUVerify.ViewModels
 				SelectedPlanId = plan.Id;
 				TreatmentPercentage = plan.PrescribedPercentage * 100.0;
 			}
+         else
+         {
+				SelectedPlanId = String.Empty;
+				TreatmentPercentage = 0;
+         }
 		}
 	}
 }

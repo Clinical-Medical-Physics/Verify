@@ -6,29 +6,31 @@
              xmlns:local="clr-namespace:SRSConeMUVerify.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <StackPanel Margin="5">
-            <TextBlock Text="Courses" FontWeight="Bold" FontSize="16"/>
-            <ListBox ItemsSource="{Binding Courses}" SelectedItem="{Binding SelectedCourse}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding CourseId}" Padding="5"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Margin="5">
-            <ListBox ItemsSource="{Binding Plans}" SelectedItem="{Binding SelectedPlan}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding PlanId}" Padding="5"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-    </Grid>
+   <Grid>
+      <Grid.RowDefinitions>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <StackPanel Margin="5">
+         <TextBlock Text="Courses" FontWeight="Bold" FontSize="16"/>
+         <ListBox ItemsSource="{Binding Courses}" SelectedItem="{Binding SelectedCourse}">
+            <ListBox.ItemTemplate>
+               <DataTemplate>
+                  <TextBlock Text="{Binding CourseId}" Padding="5"/>
+               </DataTemplate>
+            </ListBox.ItemTemplate>
+         </ListBox>
+      </StackPanel>
+      
+      <StackPanel Grid.Row="1" Margin="5">
+         <TextBlock Text="Plans" FontWeight="Bold" FontSize="16"/>
+         <ListBox ItemsSource="{Binding Plans}" SelectedItem="{Binding SelectedPlan}">
+            <ListBox.ItemTemplate>
+               <DataTemplate>
+                  <TextBlock Text="{Binding PlanId}" Padding="5"/>
+               </DataTemplate>
+            </ListBox.ItemTemplate>
+         </ListBox>
+      </StackPanel>
+   </Grid>
 </UserControl>

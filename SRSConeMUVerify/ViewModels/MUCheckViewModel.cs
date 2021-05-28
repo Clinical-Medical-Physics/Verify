@@ -60,10 +60,7 @@ namespace SRSConeMUVerify.ViewModels
       private void setCheckedBeams(PlanModel obj)
       {
          //MessageBox.Show("In OnPlanSeleced");
-         _checkedBeams = null;
-         _checkedBeams = new ObservableCollection<CheckedBeamModel>();
-
-
+         _checkedBeams.Clear();
 
          if (obj != null)
          {
