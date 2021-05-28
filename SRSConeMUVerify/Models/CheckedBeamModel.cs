@@ -17,6 +17,7 @@ namespace SRSConeMUVerify.Models
       public double WeightFactor { get; set; }
       public double OutputFactor { get; set; }
       public double TMRValue { get; set; }
+      public double TMRCalcValue { get; set; }
       public double RefDose { get; set; }
       public double CalcDose { get; set; }
       public double TPSMU { get; set; }

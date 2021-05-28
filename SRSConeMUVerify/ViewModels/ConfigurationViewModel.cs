@@ -274,10 +274,12 @@ namespace SRSConeMUVerify.ViewModels
                tmrCurve.Values = values;
                if (procOrCalc == "calculated")
                {
+                  //MessageBox.Show("tmrCurveCalcValues" + values);
                   tmrXmlModel.TmrCalcCurves.Add(tmrCurve);
                }
                else
                {
+                  //MessageBox.Show("tmrCurveValues" + values);
                   tmrXmlModel.TmrCurves.Add(tmrCurve);
                }
             }
@@ -427,7 +429,7 @@ namespace SRSConeMUVerify.ViewModels
             string tmrFile = GetStringBetweenTag(dataset.TMR_processed, '<', '>');
             File.Copy(Path.Combine(machineBeamDataDirectory, tmrFile), Path.Combine(machineDirectoryInfo.FullName, tmrFile), true);
             string tmrCalculatedFile = GetStringBetweenTag(dataset.TMR_calculated, '<', '>');
-            File.Copy(Path.Combine(machineBeamDataDirectory, tmrFile), Path.Combine(machineDirectoryInfo.FullName, tmrCalculatedFile), true);
+            File.Copy(Path.Combine(machineBeamDataDirectory, tmrCalculatedFile), Path.Combine(machineDirectoryInfo.FullName, tmrCalculatedFile), true);
 
             //MessageBox.Show(outputFactorFile);
          }

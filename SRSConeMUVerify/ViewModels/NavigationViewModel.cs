@@ -67,14 +67,16 @@ namespace SRSConeMUVerify.ViewModels
       {
          bool continueAnyway = false;
 
-         MessageBoxResult userAnswer = new MessageBoxResult();
+         //MessageBoxResult userAnswer = new MessageBoxResult();
          if (ConfigurationViewModel.IsConfigured)
          {
-            userAnswer = MessageBox.Show("SRS Cone MU Verify is already configured! Do you want to Continue?",
-               "WARNING Already Configured",
-               MessageBoxButton.YesNo,
-               MessageBoxImage.Warning);
-            if (userAnswer.ToString() == "Yes")
+            //userAnswer = MessageBox.Show("SRS Cone MU Verify is already configured! Do you want to Continue?",
+            //   "WARNING Already Configured",
+            //   MessageBoxButton.YesNo,
+            //   MessageBoxImage.Warning);
+            // use custom message window
+            ShowMessage("SRS Cone MU Verify is already configured!\nDo you want to Continue?", "Continue", "Cancel");
+            if (mvm.OnRequestOkay == "Continue")
             {
                continueAnyway = true;
             }

@@ -17,6 +17,7 @@ namespace SRSConeMUVerify.Models
       public TmrXmlModel()
       {
          TmrCurves = new List<TmrCurve>();
+         TmrCalcCurves = new List<TmrCurve>();
       }
       public class TmrCurve
       {

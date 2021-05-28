@@ -43,6 +43,7 @@ namespace SRSConeMUVerify.Models
       public TMRModel()
       {
          DataPoints = new ObservableCollection<TMRDataPoint>();
+         DataCalcPoints = new ObservableCollection<TMRDataPoint>();
       }
    }
    public class TMRDataPoint

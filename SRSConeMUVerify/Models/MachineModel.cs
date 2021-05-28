@@ -145,9 +145,9 @@ namespace SRSConeMUVerify.Models
                      }
                      
                   }
-                  catch
+                  catch (Exception ex)
                   {
-
+                     Console.WriteLine(ex.Message);
                   }
                }
             }

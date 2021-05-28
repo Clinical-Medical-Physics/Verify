@@ -13,10 +13,11 @@
             <DataGridTextColumn Header="Energy" Binding="{Binding Energy}"/>
             <DataGridTextColumn Header="Machine" Binding="{Binding Machine}"/>
             <DataGridTextColumn Header="Cone" Binding="{Binding ConeSize}"/>
-            <DataGridTextColumn Header="Ave. Depth" Binding="{Binding AverageDepth, StringFormat=N4}"/>
-            <DataGridTextColumn Header="Weight" Binding="{Binding WeightFactor, StringFormat=N4}"/>
-            <DataGridTextColumn Header="Cone Factor" Binding="{Binding OutputFactor, StringFormat=N4}"/>
+            <DataGridTextColumn Header="Ave. Depth" Binding="{Binding AverageDepth, StringFormat=N3}"/>
+            <DataGridTextColumn Header="Weight" Binding="{Binding WeightFactor, StringFormat=N3}"/>
+            <DataGridTextColumn Header="Cone Factor" Binding="{Binding OutputFactor, StringFormat=N3}"/>
             <DataGridTextColumn Header="TMR" Binding="{Binding TMRValue, StringFormat=N4}"/>
+            <DataGridTextColumn Header="Eclipse TMR" Binding="{Binding TMRCalcValue, StringFormat=N4}"/>
             <DataGridTextColumn Header="Ref. Dose" Binding="{Binding RefDose, StringFormat=N1}"/>
             <DataGridTextColumn Header="Calc. Dose" Binding="{Binding CalcDose, StringFormat=N4}"/>
             <DataGridTextColumn Header="TPS MU" Binding="{Binding TPSMU, StringFormat=N1}"/>

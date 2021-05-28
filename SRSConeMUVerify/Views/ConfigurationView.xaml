@@ -40,7 +40,7 @@
          <Label Content="Imported TMR and Cone Factors"/>
          <StackPanel Orientation="Horizontal">
 
-            <DataGrid IsReadOnly="True" Margin="5" ItemsSource="{Binding AppConfigModel.MachineModels}" AutoGenerateColumns="False" SelectedItem="{Binding AppConfigModel.SelectedMachineModel}" MaxHeight="250" MaxWidth="400" >
+            <DataGrid IsReadOnly="True" Margin="5" ItemsSource="{Binding AppConfigModel.MachineModels}" AutoGenerateColumns="False" SelectedItem="{Binding AppConfigModel.SelectedMachineModel}" MaxHeight="250"  >
                <DataGrid.Columns>
                   <DataGridTextColumn Header="Machine Code" Binding="{Binding Id}"/>
                   <DataGridTextColumn Header="Machine Name" Binding="{Binding Name}"/>

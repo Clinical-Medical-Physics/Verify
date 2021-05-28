@@ -65,20 +65,34 @@ namespace SRSConeMUVerify.Utilities
          MachineModel _machineModel = machineModels.Where(x => x.Name == checkedBeam.Machine && x.Energy == checkedBeam.Energy).First();
          
          TMRModel tmrModel = _machineModel.TMRModels.Where(x => x.ConeSize == checkedBeam.ConeSize).FirstOrDefault();
-         
+         //MessageBox.Show($"{tmrModel.DataPoints.Count} {tmrModel.DataCalcPoints.Count}");
          TMRDataPoint tmrDataPoint1 = tmrModel.DataPoints
             .Where(x => x.Depth <= checkedBeam.AverageDepth).Last();
          TMRDataPoint tmrDataPoint2 = tmrModel.DataPoints
             .Where(x => x.Depth >= checkedBeam.AverageDepth).First();
-         MessageBox.Show($"{tmrDataPoint1.Depth} {checkedBeam.AverageDepth} {tmrDataPoint2.Depth}");
-         InterpretedValue tmrValue = LinearInterpolation(tmrDataPoint1.Depth, tmrDataPoint1.TMRValue, tmrDataPoint2.Depth,
-            tmrDataPoint2.TMRValue, checkedBeam.AverageDepth);
-         MessageBox.Show($"{tmrDataPoint1.TMRValue} {tmrValue.value} {tmrDataPoint2.TMRValue}");
-         checkedBeam.TMRValue = tmrValue.value;
-         checkedBeam.OutputFactor = tmrModel.OutputFactor;
-         
+         checkedBeam.TMRValue = GetInterpolatedTMR(tmrDataPoint1,tmrDataPoint2,checkedBeam.AverageDepth).value/100.0;
+         TMRDataPoint tmrDataPoint3 = tmrModel.DataCalcPoints.Where(x => x.Depth <= checkedBeam.AverageDepth).Last();
+         TMRDataPoint tmrDataPoint4 = tmrModel.DataCalcPoints.Where(x => x.Depth >= checkedBeam.AverageDepth).First();
+         //MessageBox.Show($"{tmrDataPoint1.Depth} {tmrDataPoint1.TMRValue}\n{tmrDataPoint3.Depth} {tmrDataPoint3.TMRValue}");
+         //MessageBox.Show($"{tmrDataPoint2.Depth} {tmrDataPoint2.TMRValue}\n{tmrDataPoint4.Depth} {tmrDataPoint4.TMRValue}");
+         checkedBeam.TMRCalcValue = GetInterpolatedTMR(tmrDataPoint3, tmrDataPoint4, checkedBeam.AverageDepth).value/100.0;
+         TMRDataPoint tmrDataPoint5 = tmrModel.DataCalcPoints.Where(x => x.Depth <= 50).Last();
+         TMRDataPoint tmrDataPoint6 = tmrModel.DataCalcPoints.Where(x => x.Depth >= 51).First();
+         //MessageBox.Show($"{tmrDataPoint1.Depth} {tmrDataPoint1.TMRValue}\n{tmrDataPoint3.Depth} {tmrDataPoint3.TMRValue}");
+         //MessageBox.Show($"{tmrDataPoint2.Depth} {tmrDataPoint2.TMRValue}\n{tmrDataPoint4.Depth} {tmrDataPoint4.TMRValue}");
+         double tmrCone50 = GetInterpolatedTMR(tmrDataPoint5, tmrDataPoint6, 50).value/100.0;
+         //_machineModel.AbsoluteDoseCalibration
+         double coneFacDmax = _machineModel.AbsoluteDoseCalibration * tmrModel.OutputFactor / tmrCone50;
+         checkedBeam.OutputFactor = coneFacDmax;
+         checkedBeam.RefDose = checkedBeam.TPSMU * checkedBeam.OutputFactor;
 
          return new CheckedBeamModel();
+      }
+      public static InterpretedValue GetInterpolatedTMR(TMRDataPoint tmrDataPoint1, TMRDataPoint tmrDataPoint2,double depth)
+      {
+         return LinearInterpolation(tmrDataPoint1.Depth, tmrDataPoint1.TMRValue, tmrDataPoint2.Depth,
+            tmrDataPoint2.TMRValue, depth);
+         
       }
    }
 }
