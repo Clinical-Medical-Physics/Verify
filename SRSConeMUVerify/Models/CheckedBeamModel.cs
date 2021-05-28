@@ -22,6 +22,7 @@ namespace SRSConeMUVerify.Models
       public double CalcDose { get; set; }
       public double TPSMU { get; set; }
       public double CalcMU { get; set; }
+      public double PercentDiffMU { get; set; }
 
    }
 }

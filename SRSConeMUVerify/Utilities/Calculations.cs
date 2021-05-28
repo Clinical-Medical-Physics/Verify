@@ -85,7 +85,10 @@ namespace SRSConeMUVerify.Utilities
          double coneFacDmax = _machineModel.AbsoluteDoseCalibration * tmrModel.OutputFactor / tmrCone50;
          checkedBeam.OutputFactor = coneFacDmax;
          checkedBeam.RefDose = checkedBeam.TPSMU * checkedBeam.OutputFactor;
-
+         checkedBeam.CalcDose = planPrescriptionModel.RepeatFactor * checkedBeam.WeightFactor / checkedBeam.TMRValue;
+         checkedBeam.CalcMU = checkedBeam.CalcDose / coneFacDmax;
+         double aveMU = (checkedBeam.CalcMU + checkedBeam.TPSMU) / 2.0;
+         checkedBeam.PercentDiffMU = 100 * Math.Abs(checkedBeam.CalcMU - checkedBeam.TPSMU) / aveMU;
          return new CheckedBeamModel();
       }
       public static InterpretedValue GetInterpolatedTMR(TMRDataPoint tmrDataPoint1, TMRDataPoint tmrDataPoint2,double depth)
