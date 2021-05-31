@@ -19,7 +19,6 @@ namespace SRSConeMUVerify.ViewModels
       private Patient _patient;
       private IEventAggregator _eventAggregator;
 
-
       private PlanSetup _plan;
 
       public PlanSetup Plan
@@ -32,7 +31,7 @@ namespace SRSConeMUVerify.ViewModels
       public PlanPrescriptionModel PlanPrescriptionModel
       {
          get { return _planPrescriptionModel; }
-         set { SetProperty(ref _planPrescriptionModel,value); }
+         set { SetProperty(ref _planPrescriptionModel, value); }
       }
 
       private ObservableCollection<CheckedBeamModel> _checkedBeams;
@@ -55,6 +54,7 @@ namespace SRSConeMUVerify.ViewModels
          _eventAggregator.GetEvent<PlanSelectedEvent>().Subscribe(OnPlanSelected);
          _patient = patient;
          _checkedBeams = new ObservableCollection<CheckedBeamModel>();
+
          setCheckedBeams(planNavigationViewModel.SelectedPlan);
       }
 
@@ -62,13 +62,16 @@ namespace SRSConeMUVerify.ViewModels
       {
          //MessageBox.Show("In OnPlanSeleced");
          _checkedBeams.Clear();
-         
+
          if (obj != null)
          {
+            // is this a cone plan
+
             _plan = _patient.Courses.FirstOrDefault(x => x.Id == obj.CourseId).PlanSetups.FirstOrDefault(x => x.Id == obj.PlanId);
             List<Beam> beams = _plan.Beams.Where(x => x.IsSetupField == false).ToList();
+
             double totalWeight = beams.Sum(x => x.WeightFactor);
-            _planPrescriptionModel = new PlanPrescriptionModel(_plan.UniqueFractionation.PrescribedDosePerFraction.Dose
+            _planPrescriptionModel.getPlanPrescriptionModel(_plan.UniqueFractionation.PrescribedDosePerFraction.Dose
                , Convert.ToDouble(_plan.UniqueFractionation.NumberOfFractions), _plan.TotalPrescribedDose.Dose,
                _plan.PrescribedPercentage, totalWeight, _plan.Dose.DoseMax3D.Dose,
                _plan.Dose.GetDoseToPoint(beams.First().IsocenterPosition).Dose);
@@ -78,20 +81,24 @@ namespace SRSConeMUVerify.ViewModels
                checkedBeam.Id = beam.Id.ToString();
                checkedBeam.Machine = beam.ExternalBeam.Id;
                checkedBeam.Energy = beam.EnergyModeDisplayName.ToString();
-               checkedBeam.ConeSize = beam.Applicator.Id.ToString();
+
+               checkedBeam.ConeSize = beam.Applicator?.Id.ToString() ?? "no cone";
+
                checkedBeam.AverageDepth = (1000 - beam.AverageSSD);
                checkedBeam.WeightFactor = beam.WeightFactor;
 
                checkedBeam.TPSMU = beam.Meterset.Value;
-               
+
                _checkedBeams.Add(checkedBeam);
-               Calculations.CalculateCheckBeam(checkedBeam,MachineModels,_planPrescriptionModel);
+               Calculations.CalculateCheckBeam(checkedBeam, MachineModels, _planPrescriptionModel);
             }
-            
+
          }
          else
          {
             MessageBox.Show("Object was null in setCheckedBeams");
+            _plan = null;
+            _planPrescriptionModel.resetPlanPrescriptionModel();
          }
       }
 

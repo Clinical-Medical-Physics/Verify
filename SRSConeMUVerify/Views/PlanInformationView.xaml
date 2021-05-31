@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SRSConeMUVerify.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="AliceBlue">
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -37,6 +38,21 @@
             <Run Text="Total Dose: "/>
             <Run Text="{Binding PlanPrescriptionModel.TotalDose}"/>
             <Run Text="{Binding DoseUnit}"/>
+      </TextBlock>
+      <TextBlock Grid.Row="3" Grid.Column="0">
+            <Run Text="Total Weight: "/>
+            <Run Text="{Binding PlanPrescriptionModel.TotalWeight, StringFormat=N3}"/>
+            
+      </TextBlock>
+      <TextBlock Grid.Row="3" Grid.Column="1">
+            <Run Text="Weight At DMax: "/>
+            <Run Text="{Binding PlanPrescriptionModel.WeightAtDoseMaximum, StringFormat=N3}"/>
+            
+      </TextBlock>
+      <TextBlock Grid.Row="3" Grid.Column="2">
+            <Run Text="RepeatFactor: "/>
+            <Run Text="{Binding PlanPrescriptionModel.RepeatFactor, StringFormat=N2}"/>
+
       </TextBlock>
    </Grid>
 </UserControl>

@@ -69,13 +69,21 @@ namespace SRSConeMUVerify.ViewModels
 			{
 				var plan = _patient.Courses.FirstOrDefault(x => x.Id == obj.CourseId).PlanSetups.FirstOrDefault(x => x.Id == obj.PlanId);
 				MessageBox.Show("In OnPlanSelected PlanInfoViewModel");
-				DoseUnit = plan.Dose.DoseMax3D.UnitAsString;
+				List<Beam> beams = plan.Beams.Where(x => x.IsSetupField == false).ToList();
+				double totalWeight = beams.Sum(x => x.WeightFactor);
+				_planPrescriptionModel.getPlanPrescriptionModel(plan.UniqueFractionation.PrescribedDosePerFraction.Dose
+					, Convert.ToDouble(plan.UniqueFractionation.NumberOfFractions), plan.TotalPrescribedDose.Dose,
+					plan.PrescribedPercentage, totalWeight, plan.Dose.DoseMax3D.Dose,
+					plan.Dose.GetDoseToPoint(beams.First().IsocenterPosition).Dose);
+				
+				DoseUnit = plan.TotalPrescribedDose.UnitAsString;
 				
 				SelectedPlanId = plan.Id;
 				TreatmentPercentage = plan.PrescribedPercentage * 100.0;
 			}
          else
          {
+				_planPrescriptionModel.resetPlanPrescriptionModel();
 				SelectedPlanId = String.Empty;
 				TreatmentPercentage = 0;
 				DoseUnit = String.Empty;

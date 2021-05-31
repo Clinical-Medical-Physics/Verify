@@ -45,7 +45,7 @@ namespace SRSConeMUVerify.Utilities
       /// <returns></returns>
       public static InterpretedValue LinearInterpolation(double x1, double f1, double x2, double f2, double x)
       {
-         InterpretedValue interpretedValue = new InterpretedValue(0,true);
+         InterpretedValue interpretedValue = new InterpretedValue(0, true);
 
          if ((x1 == x2) || (x < x1 && x < x2) || (x > x1 && x > x2))
          {
@@ -55,48 +55,62 @@ namespace SRSConeMUVerify.Utilities
          interpretedValue.value = ((x2 - x) / (x2 - x1)) * f1 + ((x - x1) / (x2 - x1)) * f2;
          return interpretedValue;
       }
-      public static CheckedBeamModel CalculateCheckBeam(CheckedBeamModel checkedBeam, 
+      public static void CalculateCheckBeam(CheckedBeamModel checkedBeam,
          ObservableCollection<MachineModel> machineModels,
          PlanPrescriptionModel planPrescriptionModel)
       {
          //
-       
-         
-         MachineModel _machineModel = machineModels.Where(x => x.Name == checkedBeam.Machine && x.Energy == checkedBeam.Energy).First();
-         
-         TMRModel tmrModel = _machineModel.TMRModels.Where(x => x.ConeSize == checkedBeam.ConeSize).FirstOrDefault();
-         //MessageBox.Show($"{tmrModel.DataPoints.Count} {tmrModel.DataCalcPoints.Count}");
-         TMRDataPoint tmrDataPoint1 = tmrModel.DataPoints
-            .Where(x => x.Depth <= checkedBeam.AverageDepth).Last();
-         TMRDataPoint tmrDataPoint2 = tmrModel.DataPoints
-            .Where(x => x.Depth >= checkedBeam.AverageDepth).First();
-         checkedBeam.TMRValue = GetInterpolatedTMR(tmrDataPoint1,tmrDataPoint2,checkedBeam.AverageDepth).value/100.0;
-         TMRDataPoint tmrDataPoint3 = tmrModel.DataCalcPoints.Where(x => x.Depth <= checkedBeam.AverageDepth).Last();
-         TMRDataPoint tmrDataPoint4 = tmrModel.DataCalcPoints.Where(x => x.Depth >= checkedBeam.AverageDepth).First();
-         //MessageBox.Show($"{tmrDataPoint1.Depth} {tmrDataPoint1.TMRValue}\n{tmrDataPoint3.Depth} {tmrDataPoint3.TMRValue}");
-         //MessageBox.Show($"{tmrDataPoint2.Depth} {tmrDataPoint2.TMRValue}\n{tmrDataPoint4.Depth} {tmrDataPoint4.TMRValue}");
-         checkedBeam.TMRCalcValue = GetInterpolatedTMR(tmrDataPoint3, tmrDataPoint4, checkedBeam.AverageDepth).value/100.0;
-         TMRDataPoint tmrDataPoint5 = tmrModel.DataCalcPoints.Where(x => x.Depth <= 50).Last();
-         TMRDataPoint tmrDataPoint6 = tmrModel.DataCalcPoints.Where(x => x.Depth >= 51).First();
-         //MessageBox.Show($"{tmrDataPoint1.Depth} {tmrDataPoint1.TMRValue}\n{tmrDataPoint3.Depth} {tmrDataPoint3.TMRValue}");
-         //MessageBox.Show($"{tmrDataPoint2.Depth} {tmrDataPoint2.TMRValue}\n{tmrDataPoint4.Depth} {tmrDataPoint4.TMRValue}");
-         // TODO make this point to the tmr depth from the cone output parameters
-         double tmrCone50 = GetInterpolatedTMR(tmrDataPoint5, tmrDataPoint6, 50).value/100.0;
-         //_machineModel.AbsoluteDoseCalibration
-         double coneFacDmax = _machineModel.AbsoluteDoseCalibration * tmrModel.OutputFactor / tmrCone50;
-         checkedBeam.OutputFactor = coneFacDmax;
-         checkedBeam.RefDose = checkedBeam.TPSMU * checkedBeam.OutputFactor;
-         checkedBeam.CalcDose = planPrescriptionModel.RepeatFactor * checkedBeam.WeightFactor / checkedBeam.TMRValue;
-         checkedBeam.CalcMU = checkedBeam.CalcDose / coneFacDmax;
-         double aveMU = (checkedBeam.CalcMU + checkedBeam.TPSMU) / 2.0;
-         checkedBeam.PercentDiffMU = 100 * Math.Abs(checkedBeam.CalcMU - checkedBeam.TPSMU) / aveMU;
-         return new CheckedBeamModel();
+         if (checkedBeam.ConeSize == "no cone")
+         {
+            returnNaN(checkedBeam);
+         }
+         else
+         {
+            MachineModel _machineModel = machineModels.Where(x => x.Name == checkedBeam.Machine && x.Energy == checkedBeam.Energy).First();
+
+            TMRModel tmrModel = _machineModel.TMRModels.Where(x => x.ConeSize == checkedBeam.ConeSize).FirstOrDefault();
+            //MessageBox.Show($"{tmrModel.DataPoints.Count} {tmrModel.DataCalcPoints.Count}");
+            TMRDataPoint tmrDataPoint1 = tmrModel.DataPoints
+               .Where(x => x.Depth <= checkedBeam.AverageDepth).Last();
+            TMRDataPoint tmrDataPoint2 = tmrModel.DataPoints
+               .Where(x => x.Depth >= checkedBeam.AverageDepth).First();
+            checkedBeam.TMRValue = GetInterpolatedTMR(tmrDataPoint1, tmrDataPoint2, checkedBeam.AverageDepth).value / 100.0;
+            TMRDataPoint tmrDataPoint3 = tmrModel.DataCalcPoints.Where(x => x.Depth <= checkedBeam.AverageDepth).Last();
+            TMRDataPoint tmrDataPoint4 = tmrModel.DataCalcPoints.Where(x => x.Depth >= checkedBeam.AverageDepth).First();
+            //MessageBox.Show($"{tmrDataPoint1.Depth} {tmrDataPoint1.TMRValue}\n{tmrDataPoint3.Depth} {tmrDataPoint3.TMRValue}");
+            //MessageBox.Show($"{tmrDataPoint2.Depth} {tmrDataPoint2.TMRValue}\n{tmrDataPoint4.Depth} {tmrDataPoint4.TMRValue}");
+            checkedBeam.TMRCalcValue = GetInterpolatedTMR(tmrDataPoint3, tmrDataPoint4, checkedBeam.AverageDepth).value / 100.0;
+            TMRDataPoint tmrDataPoint5 = tmrModel.DataCalcPoints.Where(x => x.Depth <= 50).Last();
+            TMRDataPoint tmrDataPoint6 = tmrModel.DataCalcPoints.Where(x => x.Depth >= 51).First();
+            //MessageBox.Show($"{tmrDataPoint1.Depth} {tmrDataPoint1.TMRValue}\n{tmrDataPoint3.Depth} {tmrDataPoint3.TMRValue}");
+            //MessageBox.Show($"{tmrDataPoint2.Depth} {tmrDataPoint2.TMRValue}\n{tmrDataPoint4.Depth} {tmrDataPoint4.TMRValue}");
+            // TODO make this point to the tmr depth from the cone output parameters
+            double tmrCone50 = GetInterpolatedTMR(tmrDataPoint5, tmrDataPoint6, 50).value / 100.0;
+            //_machineModel.AbsoluteDoseCalibration
+            double coneFacDmax = _machineModel.AbsoluteDoseCalibration * tmrModel.OutputFactor / tmrCone50;
+            checkedBeam.OutputFactor = coneFacDmax;
+            checkedBeam.RefDose = checkedBeam.TPSMU * checkedBeam.OutputFactor;
+            checkedBeam.CalcDose = planPrescriptionModel.RepeatFactor * checkedBeam.WeightFactor / checkedBeam.TMRValue;
+            checkedBeam.CalcMU = checkedBeam.CalcDose / coneFacDmax;
+            double aveMU = (checkedBeam.CalcMU + checkedBeam.TPSMU) / 2.0;
+            checkedBeam.PercentDiffMU = 100 * Math.Abs(checkedBeam.CalcMU - checkedBeam.TPSMU) / aveMU;
+         }
       }
-      public static InterpretedValue GetInterpolatedTMR(TMRDataPoint tmrDataPoint1, TMRDataPoint tmrDataPoint2,double depth)
+      public static InterpretedValue GetInterpolatedTMR(TMRDataPoint tmrDataPoint1, TMRDataPoint tmrDataPoint2, double depth)
       {
          return LinearInterpolation(tmrDataPoint1.Depth, tmrDataPoint1.TMRValue, tmrDataPoint2.Depth,
             tmrDataPoint2.TMRValue, depth);
-         
+
+      }
+      public static void returnNaN(CheckedBeamModel checkedBeam)
+      {
+         checkedBeam.TMRValue = Double.NaN;
+         checkedBeam.TMRCalcValue = Double.NaN;
+         checkedBeam.OutputFactor = Double.NaN;
+         checkedBeam.RefDose = Double.NaN;
+         checkedBeam.CalcDose = Double.NaN;
+         checkedBeam.CalcMU = Double.NaN;
+         checkedBeam.PercentDiffMU = Double.NaN;
       }
    }
 }

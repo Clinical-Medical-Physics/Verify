@@ -72,10 +72,24 @@ namespace SRSConeMUVerify.Models
          get { return _doseIsocenter; }
          set { SetProperty(ref _doseIsocenter, value); }
       }
-      public PlanPrescriptionModel(double dosePerFraction, double numberOfFractions,
+      public PlanPrescriptionModel()
+      {
+         DosePerFraction = Double.NaN;
+         NumberOfFraction = Double.NaN;
+         TotalDose = Double.NaN;
+         TreatmentPercentage = Double.NaN;
+         TotalWeight = Double.NaN;
+         DoseMaximum3D = Double.NaN;
+         DoseIsocenter = Double.NaN;
+
+         WeightAtDoseMaximum = Double.NaN;
+         RepeatFactor = Double.NaN;
+      }
+      public void getPlanPrescriptionModel(double dosePerFraction, double numberOfFractions,
          double totalDose, double treatmentPercentage, double totalWeight,
          double doseMaximum, double doseIso)
       {
+
          DosePerFraction = dosePerFraction;
          NumberOfFraction = numberOfFractions;
          TotalDose = totalDose;
@@ -86,7 +100,19 @@ namespace SRSConeMUVerify.Models
          
          WeightAtDoseMaximum = getWeightAtDoseMaximum();
          RepeatFactor = getRepeatFactor();
+      }
+      public void resetPlanPrescriptionModel()
+      {
+         DosePerFraction = Double.NaN;
+         NumberOfFraction = Double.NaN;
+         TotalDose = Double.NaN;
+         TreatmentPercentage = Double.NaN;
+         TotalWeight = Double.NaN;
+         DoseMaximum3D = Double.NaN;
+         DoseIsocenter = Double.NaN;
 
+         WeightAtDoseMaximum = Double.NaN;
+         RepeatFactor = Double.NaN;
       }
 
       private double getWeightAtDoseMaximum()
