@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SRSConeMUVerify.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Background="AliceBlue">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -33,5 +33,10 @@
             <Run Text="{Binding TreatmentPercentage}"/>
             <Run Text="%"/>
         </TextBlock>
-    </Grid>
+      <TextBlock Grid.Row="2" Grid.Column="2">
+            <Run Text="Total Dose: "/>
+            <Run Text="{Binding PlanPrescriptionModel.TotalDose}"/>
+            <Run Text="{Binding DoseUnit}"/>
+      </TextBlock>
+   </Grid>
 </UserControl>

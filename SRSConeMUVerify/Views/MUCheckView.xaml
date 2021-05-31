@@ -8,13 +8,26 @@
              d:DesignHeight="450" d:DesignWidth="800">
    <Grid>
       <DataGrid ItemsSource="{Binding CheckedBeams}" AutoGenerateColumns="False">
-         
+         <DataGrid.Resources>
+            <Style TargetType="DataGridCell">
+               <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+         </DataGrid.Resources>
          <DataGrid.Columns>
             <DataGridTextColumn Header="Field Id" Binding="{Binding Id}"/>
-            <DataGridTextColumn Header="Energy" Binding="{Binding Energy}"/>
-            <DataGridTextColumn Header="Machine" Binding="{Binding Machine}"/>
-            <DataGridTextColumn Header="Cone" Binding="{Binding ConeSize}"/>
-            <DataGridTextColumn Header="Ave. Depth" Binding="{Binding AverageDepth, StringFormat=N3}"/>
+            <DataGridTextColumn Header="Energy" Binding="{Binding Energy}">
+
+            </DataGridTextColumn>
+            <DataGridTextColumn Header="Machine" Binding="{Binding Machine}">
+
+            </DataGridTextColumn>
+            <DataGridTextColumn Header="Cone" Binding="{Binding ConeSize}">
+
+            </DataGridTextColumn>
+            <DataGridTextColumn Header="Ave. Depth" Binding="{Binding AverageDepth, StringFormat=N3}">
+
+
+            </DataGridTextColumn>
             <DataGridTextColumn Header="Weight" Binding="{Binding WeightFactor, StringFormat=N3}"/>
             <DataGridTextColumn Header="Cone Factor" Binding="{Binding OutputFactor, StringFormat=N3}"/>
             <DataGridTextColumn Header="TMR" Binding="{Binding TMRValue, StringFormat=N4}"/>

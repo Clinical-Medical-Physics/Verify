@@ -80,6 +80,7 @@ namespace SRSConeMUVerify.Utilities
          TMRDataPoint tmrDataPoint6 = tmrModel.DataCalcPoints.Where(x => x.Depth >= 51).First();
          //MessageBox.Show($"{tmrDataPoint1.Depth} {tmrDataPoint1.TMRValue}\n{tmrDataPoint3.Depth} {tmrDataPoint3.TMRValue}");
          //MessageBox.Show($"{tmrDataPoint2.Depth} {tmrDataPoint2.TMRValue}\n{tmrDataPoint4.Depth} {tmrDataPoint4.TMRValue}");
+         // TODO make this point to the tmr depth from the cone output parameters
          double tmrCone50 = GetInterpolatedTMR(tmrDataPoint5, tmrDataPoint6, 50).value/100.0;
          //_machineModel.AbsoluteDoseCalibration
          double coneFacDmax = _machineModel.AbsoluteDoseCalibration * tmrModel.OutputFactor / tmrCone50;

@@ -45,11 +45,12 @@ namespace SRSConeMUVerify.ViewModels
 
       public MUCheckViewModel(ConfigurationViewModel configurationViewModel, Patient patient,
          PlanInformationViewModel planInformationViewModel, PlanNavigationViewModel planNavigationViewModel,
-         IEventAggregator eventAggregator)
+         IEventAggregator eventAggregator, PlanPrescriptionModel planPrescriptionModel)
       {
          ConfigurationViewModel = configurationViewModel;
          PlanInformationViewModel = planInformationViewModel;
          MachineModels = ConfigurationViewModel.AppConfigModel.MachineModels;
+         PlanPrescriptionModel = planPrescriptionModel;
          _eventAggregator = eventAggregator;
          _eventAggregator.GetEvent<PlanSelectedEvent>().Subscribe(OnPlanSelected);
          _patient = patient;
@@ -61,7 +62,7 @@ namespace SRSConeMUVerify.ViewModels
       {
          //MessageBox.Show("In OnPlanSeleced");
          _checkedBeams.Clear();
-
+         
          if (obj != null)
          {
             _plan = _patient.Courses.FirstOrDefault(x => x.Id == obj.CourseId).PlanSetups.FirstOrDefault(x => x.Id == obj.PlanId);

@@ -37,13 +37,30 @@ namespace SRSConeMUVerify.ViewModels
 			get { return _treatmentPercentage; }
 			set { SetProperty(ref _treatmentPercentage,value); }
 		}
+      private PlanPrescriptionModel _planPrescriptionModel;
 
-		public PlanInformationViewModel(Patient patient, IEventAggregator eventAggregator)
+      public PlanPrescriptionModel PlanPrescriptionModel
+      {
+         get { return _planPrescriptionModel; }
+         set { SetProperty(ref _planPrescriptionModel, value); }
+      }
+      private string _doseUnit;
+
+      public string DoseUnit
+      {
+         get { return _doseUnit; }
+         set { SetProperty(ref _doseUnit,  value); }
+      }
+
+      public PlanInformationViewModel(Patient patient, IEventAggregator eventAggregator,PlanPrescriptionModel planPrescriptionModel)
 		{
+			PlanPrescriptionModel = planPrescriptionModel;
 			_patient = patient;
 			PatientName = patient.Name;
 			_eventAggregator = eventAggregator;
+			DoseUnit = String.Empty;
 			_eventAggregator.GetEvent<PlanSelectedEvent>().Subscribe(OnPlanSelected);
+         
 		}
 
 		private void OnPlanSelected(PlanModel obj)
@@ -52,6 +69,8 @@ namespace SRSConeMUVerify.ViewModels
 			{
 				var plan = _patient.Courses.FirstOrDefault(x => x.Id == obj.CourseId).PlanSetups.FirstOrDefault(x => x.Id == obj.PlanId);
 				MessageBox.Show("In OnPlanSelected PlanInfoViewModel");
+				DoseUnit = plan.Dose.DoseMax3D.UnitAsString;
+				
 				SelectedPlanId = plan.Id;
 				TreatmentPercentage = plan.PrescribedPercentage * 100.0;
 			}
@@ -59,6 +78,7 @@ namespace SRSConeMUVerify.ViewModels
          {
 				SelectedPlanId = String.Empty;
 				TreatmentPercentage = 0;
+				DoseUnit = String.Empty;
          }
 		}
 	}
