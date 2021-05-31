@@ -11,6 +11,7 @@ namespace SRSConeMUVerify.Models
 
    public class TMRModel : BindableBase
    {
+      // TODO add a connection to the sourcedetector distance fomr tmrxmlmodel
       private string _coneSize;
 
       public string ConeSize
