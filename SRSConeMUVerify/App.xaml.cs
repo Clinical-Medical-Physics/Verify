@@ -28,7 +28,7 @@ namespace SRSConeMUVerify
          {
             // TODO need to remove the null, null for versions > 11
             
-            using (_app = VMS.TPS.Common.Model.API.Application.CreateApplication("jhaywood", "Wsxedc45"))
+            using (_app = VMS.TPS.Common.Model.API.Application.CreateApplication(null, null))
             {
                
                if (e.Args.Count() > 0 && !String.IsNullOrEmpty(e.Args.FirstOrDefault()))
