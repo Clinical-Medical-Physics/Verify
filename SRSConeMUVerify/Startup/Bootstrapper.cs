@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using DVHPlot.ViewModels;
 using Prism.Events;
 using SRSConeMUVerify.Models;
 using SRSConeMUVerify.ViewModels;
@@ -40,7 +41,8 @@ namespace SRSConeMUVerify.Startup
          container.RegisterType<MainViewModel>();
          container.RegisterType<MainView>();
          container.RegisterType<NavigationViewModel>();
-         
+         container.RegisterType<DVHSelectionViewModel>();
+         container.RegisterType<DVHViewModel>();
          container.RegisterType<PlanNavigationViewModel>();
          container.RegisterType<PlanInformationViewModel>();
          container.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();

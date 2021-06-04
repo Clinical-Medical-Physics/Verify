@@ -96,7 +96,7 @@ namespace SRSConeMUVerify.ViewModels
          }
          else
          {
-            MessageBox.Show("Object was null in setCheckedBeams");
+            //MessageBox.Show("Object was null in setCheckedBeams");
             _plan = null;
             _planPrescriptionModel.resetPlanPrescriptionModel();
          }

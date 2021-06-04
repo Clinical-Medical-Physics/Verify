@@ -8,8 +8,23 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="1200">
     <Grid>
-        <Button Height="50" Width="50" HorizontalAlignment="Right" Foreground="Blue" Command="{Binding LaunchConfigurationCommand}">
+      <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+      <Button Margin="5" Height="50" Width="50"  Foreground="#16499A" Command="{Binding PrintView}">
+         <Button.ToolTip>
+            <ToolTip>
+               Save as PDF
+            </ToolTip>
+         </Button.ToolTip>
+         <icons:FontAwesome Kind="FilePdfRegular" Height="30" Width="30"/>
+      </Button>
+         <Button Margin="5" Height="50" Width="50" Foreground="#16499A" Command="{Binding LaunchConfigurationCommand}">
+         <Button.ToolTip>
+            <ToolTip>
+               Configure
+            </ToolTip>
+         </Button.ToolTip>
             <icons:FontAwesome Kind="CogSolid" Height="30" Width="30"/>
         </Button>
-    </Grid>
+      </StackPanel>
+   </Grid>
 </UserControl>

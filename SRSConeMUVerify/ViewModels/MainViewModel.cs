@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DVHPlot.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,8 @@ namespace SRSConeMUVerify.ViewModels
          NavigationViewModel navigationViewModel,
          PlanInformationViewModel planInformationViewModel,//PlaninfoVM must be before plan Nav VM for eventing.
          PlanNavigationViewModel planNavigationViewModel,
-         MUCheckViewModel muCheckViewModel)
+         MUCheckViewModel muCheckViewModel,
+         DVHSelectionViewModel dVHSelectionViewModel, DVHViewModel dVHViewModel)
 
       {
          NavigationViewModel = navigationViewModel;
@@ -24,6 +26,8 @@ namespace SRSConeMUVerify.ViewModels
          PlanNavigationViewModel = planNavigationViewModel;
          ConfigurationViewModel = configurationViewModel;
          MUCheckViewModel = muCheckViewModel;
+         DVHSelectionViewModel = dVHSelectionViewModel;
+         DVHViewModel = dVHViewModel;
 
       }
 
@@ -31,6 +35,8 @@ namespace SRSConeMUVerify.ViewModels
       public PlanNavigationViewModel PlanNavigationViewModel { get; }
       public ConfigurationViewModel ConfigurationViewModel { get; }
       public MUCheckViewModel MUCheckViewModel { get; }
+      public DVHSelectionViewModel DVHSelectionViewModel { get; }
+      public DVHViewModel DVHViewModel { get; }
       public PlanInformationViewModel PlanInformationViewModel { get; }
    }
 }
