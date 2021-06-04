@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SRSConeMUVerify.Views"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:dvh="clr-namespace:DVHPlot.Views"                   
         mc:Ignorable="d"
         Title="Cone Planning MU Check Report" Height="900" Width="1200">
    <Grid>
@@ -13,11 +14,17 @@
          <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
       <local:NavigationView DataContext="{Binding NavigationViewModel}"/>
-      
+
       <DockPanel Grid.Row="1">
          <local:PlanInformationView Margin="5" DataContext="{Binding PlanInformationViewModel}" DockPanel.Dock="Top"/>
          <local:PlanNavigationView MinWidth="100" Margin="5" DataContext="{Binding PlanNavigationViewModel}" DockPanel.Dock="Left"/>
-         <local:MUCheckView DockPanel.Dock="Right" DataContext="{Binding MUCheckViewModel}"/>
+         <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
+            <local:MUCheckView DataContext="{Binding MUCheckViewModel}"/>
+            <DockPanel >
+               <dvh:DVHSelectionView DataContext="{Binding DVHSelectionViewModel}" DockPanel.Dock="Left"/>
+               <dvh:DVHView DataContext="{Binding DVHViewModel}" DockPanel.Dock="Right"/>
+            </DockPanel>
+         </StackPanel>
       </DockPanel>
    </Grid>
 </metro:MetroWindow>

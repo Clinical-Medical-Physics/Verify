@@ -79,13 +79,21 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="OxyPlot, Version=2.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.2.0.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=2.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Wpf.2.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.8.0.0.1909\lib\net45\Prism.dll</HintPath>
     </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -127,6 +135,7 @@
     <Compile Include="Events\MessageViewOkEvent.cs" />
     <Compile Include="Events\PlanSelectedEvent.cs" />
     <Compile Include="Events\RefDEnteredEvent.cs" />
+    <Compile Include="Events\StructureSelectionEvent.cs" />
     <Compile Include="Models\AbsDoseXmlModel.cs" />
     <Compile Include="Models\AppConfigModel.cs" />
     <Compile Include="Models\CalcModelModel.cs" />
@@ -138,6 +147,7 @@
     <Compile Include="Models\OutputFacXmlModel.cs" />
     <Compile Include="Models\PlanModel.cs" />
     <Compile Include="Models\PlanPrescriptionModel.cs" />
+    <Compile Include="Models\StructureSelectionModel.cs" />
     <Compile Include="Models\TMRModel.cs" />
     <Compile Include="Models\TmrXmlModel.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
@@ -149,12 +159,20 @@
     <Compile Include="Utilities\MapfileReader.cs" />
     <Compile Include="Utilities\TmrXmlReader.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\DVHSelectionViewModel.cs" />
+    <Compile Include="ViewModels\DVHViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\MUCheckViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\PlanInformationViewModel.cs" />
     <Compile Include="ViewModels\PlanNavigationViewModel.cs" />
+    <Compile Include="Views\DVHSelectionView.xaml.cs">
+      <DependentUpon>DVHSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DVHView.xaml.cs">
+      <DependentUpon>DVHView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MessageView.xaml.cs">
       <DependentUpon>MessageView.xaml</DependentUpon>
     </Compile>
@@ -224,6 +242,14 @@
     <Resource Include="Resources\SRSCalculationModels.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\DVHSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DVHView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MessageView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -255,7 +281,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-   <PropertyGroup>
-      <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
-   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
+  </PropertyGroup>
 </Project>
