@@ -21,10 +21,11 @@ using DVHPlot.Views;
 using System.IO;
 using Microsoft.Win32;
 using System.Windows.Media;
+using Prism.Mvvm;
 
 namespace SRSConeMUVerify.ViewModels
 {
-   public class NavigationViewModel
+   public class NavigationViewModel : BindableBase
    {
       public ConfigurationViewModel ConfigurationViewModel { get; set; }
       public PlanInformationViewModel PlanInformationViewModel { get; }
@@ -34,15 +35,34 @@ namespace SRSConeMUVerify.ViewModels
       public DelegateCommand PrintView { get; private set; }
       public IEventAggregator _eventAggregator;
       public ConfigurationView configurationView { get; set; }
+      public PrintPreviewView printPreviewView { get; set; }
+      public PrintPreviewModel PrintPreviewModel { get; set; }
       public MessageView mv { get; set; }
       public MessageViewModel mvm { get; set; }
+      public PrintPreviewViewModel PrintPreviewViewModel { get; set; }
+      private FlowDocument _printPreviewFD;
+
+      public FlowDocument PrintPreviewFD
+      {
+         get { return _printPreviewFD; }
+         set
+         {
+            SetProperty(ref _printPreviewFD, value);
+            
+         }
+      }
+
       public NavigationViewModel(ConfigurationViewModel configurationViewModel, IEventAggregator eventAggregator,
-         PlanInformationViewModel planInformationViewModel, MUCheckViewModel muCheckViewModel, DVHViewModel dVHViewModel)
+         PlanInformationViewModel planInformationViewModel, MUCheckViewModel muCheckViewModel, DVHViewModel dVHViewModel,
+         PrintPreviewViewModel printPreviewViewModel)
       {
          ConfigurationViewModel = configurationViewModel;
          PlanInformationViewModel = planInformationViewModel;
          MUCheckViewModel = muCheckViewModel;
          DVHViewModel = dVHViewModel;
+         PrintPreviewViewModel = printPreviewViewModel;
+         PrintPreviewFD = new FlowDocument();
+         PrintPreviewModel = new PrintPreviewModel();
          LaunchConfigurationCommand = new DelegateCommand(OnLaunchConfiguration);
          PrintView = new DelegateCommand(OnPrintView);
          _eventAggregator = eventAggregator;
@@ -108,11 +128,18 @@ namespace SRSConeMUVerify.ViewModels
          double dWidth = 8.5 / (1.0 / res);
          int page_width = (int)(dWidth);
          double ires = 300;
-         double iheight = 0.9*5.5 / (1.0 / ires);
-         int image_height = (int)iheight-50;
+         double iheight = 0.9 * 5.5 / (1.0 / ires);
+         int image_height = (int)iheight - 50;
          double iwidth = 0.9 * 8.5 / (1.0 / ires);
-         int image_width = (int)iwidth-50;
-         FlowDocument fd = new FlowDocument { FontSize = 18, FontFamily = new FontFamily("Franklin Gothic") };
+         int image_width = (int)iwidth - 50;
+
+         FlowDocument fd = new FlowDocument { FontSize = 12, FontFamily = new FontFamily("Franklin Gothic") };
+         fd.ColumnWidth = 768;
+         fd.IsColumnWidthFlexible = true;
+         fd.PageHeight = 816;
+         fd.PageWidth = 1056;
+         fd.MinPageWidth = 816;
+         fd.MinPageHeight = 1056;
          fd.Blocks.Add(new Paragraph(new Run("Verify Report")));
          fd.Blocks.Add(new BlockUIContainer(new PlanInformationView { DataContext = PlanInformationViewModel }));
 
@@ -120,9 +147,9 @@ namespace SRSConeMUVerify.ViewModels
          SetPlotModelProperties();
          //fd.Blocks.Add(new BlockUIContainer(new DVHView { DataContext = DVHViewModel }));
          var pngExporter = new PngExporter { Background = OxyColors.Transparent, Resolution = ires, Height = image_height, Width = image_width };
-         
+
          BitmapSource bmp = pngExporter.ExportToBitmap(DVHViewModel.DVHPlotModel);
-         
+
          //play with these numbers and try landscape to make the output look better
          fd.Blocks.Add(new BlockUIContainer(new System.Windows.Controls.Image
          {
@@ -130,6 +157,10 @@ namespace SRSConeMUVerify.ViewModels
             //Height = image_height,
             //Width = image_width
          }));
+         //PrintPreviewModel.printViewFD = fd;
+         //printPreviewView = new PrintPreviewView();
+         //printPreviewView.DataContext = PrintPreviewModel;
+         //printPreviewView.ShowDialog();
          System.Windows.Controls.PrintDialog printer = new System.Windows.Controls.PrintDialog();
          //printer.PrintTicket.PageOrientation = System.Printing.PageOrientation.Landscape;
          fd.PageHeight = page_height;
@@ -156,7 +187,7 @@ namespace SRSConeMUVerify.ViewModels
          DVHViewModel.DVHPlotModel.TextColor = OxyColors.Black;
          DVHViewModel.DVHPlotModel.LegendPlacement = LegendPlacement.Inside;
          DVHViewModel.DVHPlotModel.LegendPosition = LegendPosition.TopLeft;
-         foreach(OxyPlot.Axes.LinearAxis axis in DVHViewModel.DVHPlotModel.Axes)
+         foreach (OxyPlot.Axes.LinearAxis axis in DVHViewModel.DVHPlotModel.Axes)
          {
             axis.FontSize = 14;
             axis.TitleFontSize = 14;

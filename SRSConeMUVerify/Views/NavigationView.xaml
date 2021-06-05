@@ -9,7 +9,7 @@
              d:DesignHeight="150" d:DesignWidth="1200">
     <Grid>
       <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-      <Button Margin="5" Height="50" Width="50"  Foreground="#16499A" Command="{Binding PrintView}">
+      <Button Margin="5" Height="50" Width="50"  Foreground="#16499A"  Command="{Binding PrintView}">
          <Button.ToolTip>
             <ToolTip>
                Save as PDF

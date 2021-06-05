@@ -167,6 +167,8 @@
     <Compile Include="Models\OutputFacXmlModel.cs" />
     <Compile Include="Models\PlanModel.cs" />
     <Compile Include="Models\PlanPrescriptionModel.cs" />
+    <Compile Include="Models\PrintPreviewModel.cs" />
+    <Compile Include="ViewModels\PrintPreviewViewModel.cs" />
     <Compile Include="Models\StructureSelectionModel.cs" />
     <Compile Include="Models\TMRModel.cs" />
     <Compile Include="Models\TmrXmlModel.cs" />
@@ -213,6 +215,9 @@
     </Compile>
     <Compile Include="Views\PlanNavigationView.xaml.cs">
       <DependentUpon>PlanNavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintPreviewView.xaml.cs">
+      <DependentUpon>PrintPreviewView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -297,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PlanNavigationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintPreviewView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
