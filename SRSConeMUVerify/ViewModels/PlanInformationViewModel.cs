@@ -71,7 +71,7 @@ namespace SRSConeMUVerify.ViewModels
             //MessageBox.Show("In OnPlanSelected PlanInfoViewModel");
             List<Beam> beams = plan.Beams.Where(x => x.IsSetupField == false).ToList();
             double totalWeight = beams.Sum(x => x.WeightFactor);
-            _planPrescriptionModel.getPlanPrescriptionModel(plan.UniqueFractionation.PrescribedDosePerFraction.Dose
+            PlanPrescriptionModel.getPlanPrescriptionModel(plan.UniqueFractionation.PrescribedDosePerFraction.Dose
                , Convert.ToDouble(plan.UniqueFractionation.NumberOfFractions), plan.TotalPrescribedDose.Dose,
                plan.PrescribedPercentage, totalWeight, plan.Dose.DoseMax3D.Dose,
                plan.Dose.GetDoseToPoint(beams.First().IsocenterPosition).Dose);
@@ -83,7 +83,7 @@ namespace SRSConeMUVerify.ViewModels
          }
          else
          {
-            _planPrescriptionModel.resetPlanPrescriptionModel();
+            PlanPrescriptionModel.resetPlanPrescriptionModel();
             SelectedPlanId = String.Empty;
             TreatmentPercentage = 0;
             DoseUnit = String.Empty;

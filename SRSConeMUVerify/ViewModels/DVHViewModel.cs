@@ -5,6 +5,8 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using Prism.Events;
 using Prism.Mvvm;
+using SRSConeMUVerify.Events;
+using SRSConeMUVerify.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,18 +20,59 @@ namespace DVHPlot.ViewModels
    public class DVHViewModel : BindableBase
    {
       private PlanSetup _plan;
+
+      public PlanSetup Plan
+      {
+         get { return _plan; }
+         set { SetProperty(ref _plan, value); }
+      }
+      private Patient _patient;
+      private Course _course;
+
+      public Course Course
+      {
+         get { return _course; }
+         set { SetProperty(ref _course, value); }
+      }
       private IEventAggregator _eventAggregator;
-      public PlotModel DVHPlotModel { get; set; }
+      private PlotModel _dvhPlotModel;
+
+      public PlotModel DVHPlotModel
+      {
+         get { return _dvhPlotModel; }
+         set { SetProperty(ref _dvhPlotModel, value); }
+      }
+
 
       public DVHViewModel(PlanSetup plan,
-          IEventAggregator eventAggregator)
+          IEventAggregator eventAggregator, Patient patient)
       {
          _plan = plan;
+         _patient = patient;
          _eventAggregator = eventAggregator;
          DVHPlotModel = new PlotModel();
-         SetPlotModelProperties();
+         SetPlotModelProperties(Plan.Id.ToString(), Plan.TotalPrescribedDose.UnitAsString);
          //GetDefaultDVH();
          _eventAggregator.GetEvent<StructureSelectionEvent>().Subscribe(OnStructureSelectionChanged);
+         _eventAggregator.GetEvent<PlanSelectedEvent>().Subscribe(OnPlanChanged);
+      }
+
+      private void OnPlanChanged(PlanModel obj)
+      {
+         
+         if (obj != null)
+         {
+            Course = _patient.Courses.Where(x => x.Id == obj.CourseId).FirstOrDefault();
+            Plan = Course.PlanSetups.Where(x => x.Id == obj.PlanId).FirstOrDefault();
+            DVHPlotModel = new PlotModel();
+            SetPlotModelProperties(Plan.Id.ToString(), Plan.TotalPrescribedDose.UnitAsString);
+         }
+         else
+         {
+            Plan = null;
+            DVHPlotModel = new PlotModel();
+            SetPlotModelProperties("No plan selected", "Gy");
+         }
       }
 
       private void OnStructureSelectionChanged(StructureSelectionModel selStructure)
@@ -58,9 +101,9 @@ namespace DVHPlot.ViewModels
          DVHPlotModel.InvalidatePlot(true);
       }
 
-      private void SetPlotModelProperties()
+      private void SetPlotModelProperties(string plotTitle, string doseUnits)
       {
-         DVHPlotModel.Title = $"DVH for {_plan.Id}";
+         DVHPlotModel.Title = $"DVH for {plotTitle}";
          DVHPlotModel.PlotAreaBackground = OxyColor.FromRgb(37, 37, 37);
          DVHPlotModel.PlotAreaBorderColor = OxyColors.White;
          DVHPlotModel.Background = OxyColor.FromRgb(37,37,37);
@@ -69,7 +112,7 @@ namespace DVHPlot.ViewModels
          DVHPlotModel.LegendPosition = LegendPosition.RightTop;
          DVHPlotModel.Axes.Add(new LinearAxis
          {
-            Title = $"Dose [{_plan.TotalPrescribedDose.UnitAsString}]",
+            Title = $"Dose [{doseUnits}]",
             Position = AxisPosition.Bottom,
             FontSize = 12,
             AxislineThickness = 3,

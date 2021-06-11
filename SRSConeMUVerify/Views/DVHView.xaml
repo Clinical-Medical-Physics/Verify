@@ -8,6 +8,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-      <oxy:PlotView Model="{Binding DVHPlotModel}"/>
+      <oxy:PlotView Model="{Binding DVHPlotModel}" MinHeight="250"/>
    </Grid>
 </UserControl>
