@@ -89,7 +89,7 @@ namespace SRSConeMUVerify.ViewModels
          //PrintPreviewModel = new PrintPreviewModel(PlanInformationViewModel, MUCheckViewModel, DVHViewModel);
          PrintPreviewViewModel.getFlowDocument();
          printPreviewView = new PrintPreviewView();
-         printPreviewView.DataContext = PrintPreviewViewModel.PrintPreviewModel;
+         printPreviewView.DataContext = PrintPreviewViewModel;
          printPreviewView.ShowDialog();
          //System.Windows.Controls.PrintDialog printer = new System.Windows.Controls.PrintDialog();
          ////printer.PrintTicket.PageOrientation = System.Printing.PageOrientation.Landscape;

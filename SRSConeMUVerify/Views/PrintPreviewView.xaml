@@ -11,9 +11,9 @@
          <RowDefinition Height="Auto"/>
          <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
-      <Button Content="Print" Height="40" Width="100" HorizontalAlignment="Left"/>
+      <Button Content="SavePDF" Height="40" Width="100" HorizontalAlignment="Left" Command="{Binding SavePDF}"/>
       <FlowDocumentPageViewer Grid.Row="1" Margin="5" BorderBrush="Black" Background="White"
-                              BorderThickness="1" Document="{Binding printViewFD}">
+                              BorderThickness="1" Document="{Binding PrintPreviewModel.printViewFD}">
          
       </FlowDocumentPageViewer>
    </Grid>

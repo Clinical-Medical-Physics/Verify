@@ -12,7 +12,7 @@
       <Button Margin="5" Height="50" Width="50"  Foreground="#16499A"  Command="{Binding PrintView}">
          <Button.ToolTip>
             <ToolTip>
-               Save as PDF
+               PDF Preview
             </ToolTip>
          </Button.ToolTip>
          <icons:FontAwesome Kind="FilePdfRegular" Height="30" Width="30"/>

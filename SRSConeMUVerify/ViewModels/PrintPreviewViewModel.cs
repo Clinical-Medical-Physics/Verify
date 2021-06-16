@@ -15,10 +15,11 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using VMS.TPS.Common.Model.API;
+using Prism.Commands;
 
 namespace SRSConeMUVerify.ViewModels
 {
-   public class PrintPreviewViewModel:BindableBase
+   public class PrintPreviewViewModel : BindableBase
    {
       private string _patientName;
 
@@ -27,13 +28,13 @@ namespace SRSConeMUVerify.ViewModels
          get { return _patientName; }
          set { SetProperty(ref _patientName, value); }
       }
-      
+
       private PrintPreviewModel _printPreviewModel;
 
       public PrintPreviewModel PrintPreviewModel
       {
          get { return _printPreviewModel; }
-         set { SetProperty(ref _printPreviewModel , value); }
+         set { SetProperty(ref _printPreviewModel, value); }
       }
       private PlanInformationViewModel _planInfoViewModel;
 
@@ -57,9 +58,9 @@ namespace SRSConeMUVerify.ViewModels
          set { SetProperty(ref _dvhViewModel, value); }
       }
 
+      public DelegateCommand SavePDF { get; set; }
 
-
-      public PrintPreviewViewModel(PrintPreviewModel printPreviewModel,Patient patient, PlanInformationViewModel planInformationViewModel,
+      public PrintPreviewViewModel(PrintPreviewModel printPreviewModel, Patient patient, PlanInformationViewModel planInformationViewModel,
          MUCheckViewModel muCheckViewModel, DVHViewModel dvhViewModel)
       {
          PrintPreviewModel = printPreviewModel;
@@ -67,7 +68,21 @@ namespace SRSConeMUVerify.ViewModels
          PlanInformationViewModel = planInformationViewModel;
          MUCheckViewModel = muCheckViewModel;
          DVHViewModel = dvhViewModel;
+         SavePDF = new DelegateCommand(OnSavePDF);
       }
+
+      private void OnSavePDF()
+      {
+         System.Windows.Controls.PrintDialog printer = new System.Windows.Controls.PrintDialog();
+         ////printer.PrintTicket.PageOrientation = System.Printing.PageOrientation.Landscape;
+         string reportName = $"{ PlanInformationViewModel.PatientName}-MUVerification";
+         IDocumentPaginatorSource source = PrintPreviewModel.printViewFD;
+         if (printer.ShowDialog() == true)
+         {
+            printer.PrintDocument(source.DocumentPaginator, reportName);
+         }
+      }
+
       public void getFlowDocument()
       {
          double res = 120;
@@ -82,12 +97,17 @@ namespace SRSConeMUVerify.ViewModels
          int image_width = (int)iwidth - 50;
          PlotModel plotModel = DVHViewModel.DVHPlotModel;
          FlowDocument fd = new FlowDocument { FontSize = 12, FontFamily = new System.Windows.Media.FontFamily("Franklin Gothic") };
-         fd.ColumnWidth = 768;
+         fd.Background = System.Windows.Media.Brushes.White;
+         fd.Foreground = System.Windows.Media.Brushes.Black;
+         fd.ColumnWidth = page_width*0.95;
          fd.IsColumnWidthFlexible = true;
-         fd.PageHeight = 816;
-         fd.PageWidth = 1056;
          fd.MinPageWidth = 816;
          fd.MinPageHeight = 1056;
+         fd.PageHeight = page_height;
+         fd.PageWidth = page_width;
+         fd.PagePadding = new System.Windows.Thickness(50);
+         fd.ColumnGap = 0;
+         fd.ColumnWidth = page_width;
          Run titleRun = new Run("Verify SRS Cone MU Verification Report");
          titleRun.FontWeight = System.Windows.FontWeights.Bold;
          titleRun.FontSize = 18;
@@ -100,19 +120,15 @@ namespace SRSConeMUVerify.ViewModels
          Paragraph nameParagraph = new Paragraph(nameRun);
          nameParagraph.TextAlignment = System.Windows.TextAlignment.Left;
          fd.Blocks.Add(nameParagraph);
-         
+
          fd.Blocks.Add(GetHorizontalLine());
-         // Prescription
-         Run prescriptionRun = new Run("Prescription");
-         prescriptionRun.FontWeight = System.Windows.FontWeights.Bold;
-         prescriptionRun.FontSize = 16;
-         Paragraph prescriptionParagraph = new Paragraph(prescriptionRun);
-         prescriptionParagraph.TextAlignment = System.Windows.TextAlignment.Left;
-         fd.Blocks.Add(prescriptionParagraph);
+         fd.Blocks.Add(AddHeader("Prescription"));
          // Table to hold prescription information
-         fd.Blocks.Add(GetPlanInformationTable());
+         fd.Blocks.Add(AddPlanInformationTable());
          fd.Blocks.Add(GetHorizontalLine());
-         fd.Blocks.Add(new BlockUIContainer(new MUCheckView { DataContext = MUCheckViewModel }));
+         fd.Blocks.Add(AddHeader("MU Verification"));
+         fd.Blocks.Add(AddCheckedBeamsTable());
+         //fd.Blocks.Add(new BlockUIContainer(new MUCheckView { DataContext = MUCheckViewModel }));
          SetPlotModelProperties(plotModel);
          //fd.Blocks.Add(new BlockUIContainer(new DVHView { DataContext = DVHViewModel }));
          var pngExporter = new PngExporter { Background = OxyColors.Transparent, Resolution = ires, Height = image_height, Width = image_width };
@@ -128,13 +144,55 @@ namespace SRSConeMUVerify.ViewModels
          }));
          PrintPreviewModel.printViewFD = fd;
       }
-      private Table GetPlanInformationTable()
+      private Paragraph AddHeader(string header)
+      {
+         // Prescription
+         Run headerRun = new Run(header);
+         headerRun.FontWeight = System.Windows.FontWeights.Bold;
+         headerRun.FontSize = 16;
+         Paragraph headerParagraph = new Paragraph(headerRun);
+         headerParagraph.TextAlignment = System.Windows.TextAlignment.Left;
+         return headerParagraph;
+      }
+      private Table AddCheckedBeamsTable()
+      {
+         string[] rowNames = { "Id", "Energy", "ConeSize","AverageDepth","WeightFactor","OutputFactor","TMRValue",
+         "RefDose","CalcDose","TPSMU","CalcMU","PercentDiffMU"};
+         string[] units = { "", "(MV)", "(mm)", "(mm)","","","","(cGy)","(cGy)","","","" };
+         Table t = new Table();
+         int numberOfColumns = MUCheckViewModel.CheckedBeams.Count;
+         for (int i = 0; i == numberOfColumns; i++)
+         {
+            t.Columns.Add(new TableColumn());
+         }
+         //
+         t.RowGroups.Add(new TableRowGroup());
+         for (int i=0;i< rowNames.Length; i++)
+         {
+            t.RowGroups[0].Rows.Add(new TableRow());
+            TableRow currentRow = t.RowGroups[0].Rows[i];
+            AddCheckedBeamRow(rowNames[i], units[i], currentRow);
+         }
+         return t;
+      }
+      private void AddCheckedBeamRow(string rowName,string unit, TableRow currentRow)
+      {
+         currentRow.Cells.Add(AddTableCell($"{ rowName} {unit}"));
+         foreach (var checkedBeam in MUCheckViewModel.CheckedBeams)
+         {
+            
+            //object value = typeof(CheckedBeamModel).GetProperty(rowName).GetValue(checkedBeam);
+            currentRow.Cells.Add(AddTableCell($"{checkedBeam?.GetType()?.GetProperty(rowName)?.GetValue(checkedBeam):N3}"));
+            
+         }
+      }
+      private Table AddPlanInformationTable()
       {
          //fd.Blocks.Add(new BlockUIContainer(new PlanInformationView { DataContext = PlanInformationViewModel }));
          PlanPrescriptionModel planPrescriptionModel = PlanInformationViewModel.PlanPrescriptionModel;
          Table t = new Table();
          int numberOfcolumns = 8;
-         for(int x=0; x < numberOfcolumns; x++)
+         for (int x = 0; x < numberOfcolumns; x++)
          {
             t.Columns.Add(new TableColumn());
          }
@@ -147,17 +205,17 @@ namespace SRSConeMUVerify.ViewModels
          currentRow.Cells.Add(AddTableCell("Isodose Line:"));
          currentRow.Cells.Add(AddTableCell($"{PlanInformationViewModel.TreatmentPercentage} %"));
          currentRow.Cells.Add(AddTableCell("Total Dose:"));
-         currentRow.Cells.Add(AddTableCell($"{planPrescriptionModel.TotalDose} {PlanInformationViewModel.DoseUnit}"));
+         currentRow.Cells.Add(AddTableCell($"{planPrescriptionModel.TotalDose:N2} {PlanInformationViewModel.DoseUnit}"));
          t.RowGroups[0].Rows.Add(new TableRow());
          currentRow = t.RowGroups[0].Rows[1];
          currentRow.Cells.Add(AddTableCell("Total Weight:"));
-         currentRow.Cells.Add(AddTableCell($"{planPrescriptionModel.TotalWeight}"));
+         currentRow.Cells.Add(AddTableCell($"{planPrescriptionModel.TotalWeight:N3}"));
          currentRow.Cells.Add(AddTableCell("Weight at DMax:"));
-         currentRow.Cells.Add(AddTableCell($"{planPrescriptionModel.WeightAtDoseMaximum}"));
+         currentRow.Cells.Add(AddTableCell($"{planPrescriptionModel.WeightAtDoseMaximum:N3}"));
          currentRow.Cells.Add(AddTableCell("Repeat Factor:"));
-         currentRow.Cells.Add(AddTableCell($"{planPrescriptionModel.RepeatFactor}"));
+         currentRow.Cells.Add(AddTableCell($"{planPrescriptionModel.RepeatFactor:N3}"));
          return t;
-         
+
       }
       private TableCell AddTableCell(string contents)
       {
