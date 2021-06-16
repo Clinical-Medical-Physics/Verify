@@ -12,11 +12,11 @@ In this program, we pull the TMRs and Cone factors from CDC algorithm processed 
 during CDC commissioning. The cone factor is converted to match the cone factor in the Dosimetry Report from CDC. All other parameters are pulled from the beam.
 
 ## TODO
-[ ] Update for newer versions. Currently written for V11.
-[ ] Add/finish building the option to create a model based on CSV filed instead of copying from DCF server.
-[ ] Add plan checks like:
-   [ ] Is max point inside PTV/GTV
-   [ ] Is Isocenter inside PTV/GTV
-   [ ] Correct Energy and Dose Rate selected
-   [ ] etc.
-[ ] Add beams eye view for each field shoing that cone covers the PTV/GTV
+- [ ] Update for newer versions. Currently written for V11.
+- [ ] Add/finish building the option to create a model based on CSV filed instead of copying from DCF server.
+- [ ] Add plan checks like:
+   - [ ] Is max point inside PTV/GTV
+   - [ ] Is Isocenter inside PTV/GTV
+   - [ ] Correct Energy and Dose Rate selected
+   - [ ] etc.
+- [ ] Add beams eye view for each field shoing that cone covers the PTV/GTV
