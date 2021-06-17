@@ -18,5 +18,6 @@ during CDC commissioning. The cone factor is converted to match the cone factor 
    - [ ] Is max point inside PTV/GTV
    - [ ] Is Isocenter inside PTV/GTV
    - [ ] Correct Energy and Dose Rate selected
+   - [ ] Color coded pass/fail
    - [ ] etc.
 - [ ] Add beams eye view for each field shoing that cone covers the PTV/GTV
