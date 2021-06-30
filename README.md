@@ -20,4 +20,4 @@ during CDC commissioning. The cone factor is converted to match the cone factor 
    - [ ] Correct Energy and Dose Rate selected
    - [ ] Color coded pass/fail
    - [ ] etc.
-- [ ] Add beams eye view for each field shoing that cone covers the PTV/GTV
+- [ ] Add beams eye view for each field showing that cone covers the PTV/GTV
