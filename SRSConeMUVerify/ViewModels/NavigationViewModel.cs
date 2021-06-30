@@ -22,6 +22,7 @@ using System.IO;
 using Microsoft.Win32;
 using System.Windows.Media;
 using Prism.Mvvm;
+using VMS.TPS.Common.Model.API;
 
 namespace SRSConeMUVerify.ViewModels
 {
@@ -29,6 +30,7 @@ namespace SRSConeMUVerify.ViewModels
    {
       public ConfigurationViewModel ConfigurationViewModel { get; set; }
       public PlanInformationViewModel PlanInformationViewModel { get; }
+      public PlanNavigationViewModel PlanNavigationViewModel { get; }
       public MUCheckViewModel MUCheckViewModel { get; }
       public DVHViewModel DVHViewModel { get; }
       public DelegateCommand LaunchConfigurationCommand { get; private set; }
@@ -53,12 +55,14 @@ namespace SRSConeMUVerify.ViewModels
       }
 
       public NavigationViewModel(ConfigurationViewModel configurationViewModel, IEventAggregator eventAggregator,
-         PlanInformationViewModel planInformationViewModel, MUCheckViewModel muCheckViewModel, DVHViewModel dVHViewModel,
-         PrintPreviewViewModel printPreviewViewModel)
+         PlanInformationViewModel planInformationViewModel,  DVHViewModel dVHViewModel,
+         PrintPreviewViewModel printPreviewViewModel,MUCheckViewModel mUCheckViewModel, PlanNavigationViewModel planNavigationViewModel)
       {
          ConfigurationViewModel = configurationViewModel;
+         PlanNavigationViewModel = planNavigationViewModel;
+         MUCheckViewModel = mUCheckViewModel;
          PlanInformationViewModel = planInformationViewModel;
-         MUCheckViewModel = muCheckViewModel;
+         
          DVHViewModel = dVHViewModel;
          PrintPreviewViewModel = printPreviewViewModel;
          PrintPreviewFD = new FlowDocument();
@@ -75,6 +79,7 @@ namespace SRSConeMUVerify.ViewModels
             if (mvm.OnRequestOkay == "Continue")
             {
                OnLaunchConfiguration();
+               MUCheckViewModel.setCheckedBeams(PlanNavigationViewModel.SelectedPlan);
             }
             else
             {

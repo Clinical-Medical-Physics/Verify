@@ -47,7 +47,8 @@ namespace DVHPlot.ViewModels
       public DVHViewModel(PlanSetup plan,
           IEventAggregator eventAggregator, Patient patient)
       {
-         _plan = plan;
+
+         Plan = plan;
          _patient = patient;
          _eventAggregator = eventAggregator;
          DVHPlotModel = new PlotModel();

@@ -33,6 +33,13 @@ namespace SRSConeMUVerify.ViewModels
          get { return _planPrescriptionModel; }
          set { SetProperty(ref _planPrescriptionModel, value); }
       }
+      private ObservableCollection<MachineModel> _machineModels;
+
+      public ObservableCollection<MachineModel> MachineModels
+      {
+         get { return _machineModels; }
+         set { SetProperty(ref _machineModels, value); }
+      }
 
       private ObservableCollection<CheckedBeamModel> _checkedBeams;
 
@@ -56,17 +63,18 @@ namespace SRSConeMUVerify.ViewModels
          _checkedBeams = new ObservableCollection<CheckedBeamModel>();
 
          setCheckedBeams(planNavigationViewModel.SelectedPlan);
+
       }
 
-      private void setCheckedBeams(PlanModel obj)
+      public void setCheckedBeams(PlanModel obj)
       {
          //MessageBox.Show("In OnPlanSeleced");
-         _checkedBeams.Clear();
+         CheckedBeams.Clear();
 
-         if (obj != null)
+         if (obj != null && ConfigurationViewModel.IsConfigured)
          {
             // is this a cone plan
-
+            MachineModels = ConfigurationViewModel.AppConfigModel.MachineModels;
             _plan = _patient.Courses.FirstOrDefault(x => x.Id == obj.CourseId).PlanSetups.FirstOrDefault(x => x.Id == obj.PlanId);
             List<Beam> beams = _plan.Beams.Where(x => x.IsSetupField == false).ToList();
 
@@ -109,7 +117,6 @@ namespace SRSConeMUVerify.ViewModels
 
       }
 
-      public ObservableCollection<MachineModel> MachineModels { get; }
 
       public ConfigurationViewModel ConfigurationViewModel { get; }
       public PlanInformationViewModel PlanInformationViewModel { get; }

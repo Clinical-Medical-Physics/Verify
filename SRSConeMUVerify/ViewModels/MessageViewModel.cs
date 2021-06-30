@@ -39,7 +39,7 @@ namespace SRSConeMUVerify.ViewModels
       public string OnRequestOkay { get; set; }
       public DelegateCommand MessageOkPressed { get; private set;}
       public DelegateCommand MessageClosePressed { get; private set; }
-      public IEventAggregator _eventAggregator { get; set; }
+      private IEventAggregator _eventAggregator { get; set; }
       public MessageViewModel(IEventAggregator eventAggregator)
       {
          Message = "Your Message Here";

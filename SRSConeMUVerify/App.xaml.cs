@@ -28,7 +28,7 @@ namespace SRSConeMUVerify
          {
             // TODO need to remove the null, null for versions > 11
             
-            using (_app = VMS.TPS.Common.Model.API.Application.CreateApplication(null, null))
+            using (_app = VMS.TPS.Common.Model.API.Application.CreateApplication("jhaywood", "Wsxedc45"))
             {
                
                if (e.Args.Count() > 0 && !String.IsNullOrEmpty(e.Args.FirstOrDefault()))
@@ -61,18 +61,31 @@ namespace SRSConeMUVerify
                {
                   plan = course.PlanSetups.FirstOrDefault(x => x.Id == _planId);
                }
-               var bootstrapper = new Bootstrapper();
-               var container = bootstrapper.Bootstrap(patient, course, plan);
-               var mv = container.Resolve<MainView>();
-               //  TODO what does resolve do?
-               mv.DataContext = container.Resolve<MainViewModel>();
-               mv.ShowDialog();
-
+               //if patient, course, or plan are null bail out
+               if (patient != null && course != null && plan != null)
+               {
+                  var bootstrapper = new Bootstrapper();
+                  var container = bootstrapper.Bootstrap(patient, course, plan);
+                  var mv = container.Resolve<MainView>();
+                  //  TODO what does resolve do?
+                  mv.DataContext = container.Resolve<MainViewModel>();
+                  mv.ShowDialog();
+               }
+               else
+               {
+                  throw new ArgumentNullException("Plan, Course, or Patient not defined.");
+               }
             }
          }
          catch (Exception ex)
          {
-            MessageBox.Show($"Could not introduce application:\n{ex.Message}");
+            string message = ex.Message;
+            if (ex?.InnerException?.Message != null)
+            {
+               message += " " + ex.InnerException.Message;
+            }
+            MessageBox.Show($"Could not introduce application:\n{message}","Error",MessageBoxButton.OKCancel,
+               MessageBoxImage.Error,MessageBoxResult.OK,MessageBoxOptions.DefaultDesktopOnly);
             // TODO is this necessary or is there a better way
             App.Current.Shutdown();
          }
