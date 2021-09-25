@@ -52,7 +52,7 @@ namespace DVHPlot.ViewModels
          _patient = patient;
          _eventAggregator = eventAggregator;
          DVHPlotModel = new PlotModel();
-         SetPlotModelProperties(Plan.Id.ToString(), Plan.TotalPrescribedDose.UnitAsString);
+         SetPlotModelProperties(Plan.Id.ToString(), Plan.TotalDose.UnitAsString);
          //GetDefaultDVH();
          _eventAggregator.GetEvent<StructureSelectionEvent>().Subscribe(OnStructureSelectionChanged);
          _eventAggregator.GetEvent<PlanSelectedEvent>().Subscribe(OnPlanChanged);
@@ -66,7 +66,7 @@ namespace DVHPlot.ViewModels
             Course = _patient.Courses.Where(x => x.Id == obj.CourseId).FirstOrDefault();
             Plan = Course.PlanSetups.Where(x => x.Id == obj.PlanId).FirstOrDefault();
             DVHPlotModel = new PlotModel();
-            SetPlotModelProperties(Plan.Id.ToString(), Plan.TotalPrescribedDose.UnitAsString);
+            SetPlotModelProperties(Plan.Id.ToString(), Plan.TotalDose.UnitAsString);
          }
          else
          {

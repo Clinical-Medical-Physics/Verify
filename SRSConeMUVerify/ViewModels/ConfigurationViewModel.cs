@@ -378,19 +378,33 @@ namespace SRSConeMUVerify.ViewModels
       {
          string[] lines = File.ReadAllLines(fileInfo.FullName);
          // should be safe to read them here manually since they were written by the program
+
          List<string> items = ExtractFromString(lines[1], "<", ">");
-         machineModel.Name = items.First();
-         machineModel.Energy = items.Last();
-         items = ExtractFromString(lines[2], "<", ">");
-         foreach (var item in items)
+         // TODO better error checking than this if mapfile has empty machine configuration
+         if(items.Count == 0)
          {
-            if (item.Contains("CC"))
+            machineModel.Name = "No Machine";
+            machineModel.Energy = "No Energy";
+            TMRModel tmrModel = new TMRModel();
+            tmrModel.ConeSize = "0mm CC";
+            machineModel.TMRModels.Add(tmrModel);
+         }
+         else
+         {
+            machineModel.Name = items.First();
+            machineModel.Energy = items.Last();
+            items = ExtractFromString(lines[2], "<", ">");
+            foreach (var item in items)
             {
-               TMRModel tmrModel = new TMRModel();
-               tmrModel.ConeSize = item;
-               machineModel.TMRModels.Add(tmrModel);
+               if (item.Contains("CC"))
+               {
+                  TMRModel tmrModel = new TMRModel();
+                  tmrModel.ConeSize = item;
+                  machineModel.TMRModels.Add(tmrModel);
+               }
             }
          }
+         
       }
       private static List<string> ExtractFromString(string source, string start, string end)
       {

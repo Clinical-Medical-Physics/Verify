@@ -79,15 +79,15 @@ namespace SRSConeMUVerify.ViewModels
             List<Beam> beams = _plan.Beams.Where(x => x.IsSetupField == false).ToList();
 
             double totalWeight = beams.Sum(x => x.WeightFactor);
-            _planPrescriptionModel.getPlanPrescriptionModel(_plan.UniqueFractionation.PrescribedDosePerFraction.Dose
-               , Convert.ToDouble(_plan.UniqueFractionation.NumberOfFractions), _plan.TotalPrescribedDose.Dose,
-               _plan.PrescribedPercentage, totalWeight, _plan.Dose.DoseMax3D.Dose,
+            _planPrescriptionModel.getPlanPrescriptionModel(_plan.DosePerFraction.Dose
+               , Convert.ToDouble(_plan.NumberOfFractions), _plan.TotalDose.Dose,
+               _plan.TreatmentPercentage, totalWeight, _plan.Dose.DoseMax3D.Dose,
                _plan.Dose.GetDoseToPoint(beams.First().IsocenterPosition).Dose);
             foreach (Beam beam in _plan.Beams.Where(x => x.IsSetupField == false))
             {
                CheckedBeamModel checkedBeam = new CheckedBeamModel();
                checkedBeam.Id = beam.Id.ToString();
-               checkedBeam.Machine = beam.ExternalBeam.Id;
+               checkedBeam.Machine = beam.TreatmentUnit.Id;
                checkedBeam.Energy = beam.EnergyModeDisplayName.ToString();
 
                checkedBeam.ConeSize = beam.Applicator?.Id.ToString() ?? "no cone";
