@@ -201,40 +201,61 @@ namespace SRSConeMUVerify.ViewModels
             {
                DirectoryInfo directoryInfo = new DirectoryInfo(directory);
                Console.WriteLine(directoryInfo.Name);
-               MachineModel machineModel = new MachineModel();
-               machineModel.Id = directoryInfo.Name;
-               foreach (var file in Directory.GetFiles(directory))
+               //brute force get a new machine for each code set
+               int numberOfMachines = 0;
+               foreach(var file in Directory.GetFiles(directory))
                {
                   FileInfo fileInfo = new FileInfo(file);
-                  Console.WriteLine(fileInfo.Name);
-                  if (fileInfo.Name == $"{machineModel.Id}_codeset.txt")
+                  if(fileInfo.Name == $"{directoryInfo.Name}_codeset.txt")
                   {
-                     //MessageBox.Show($"{machineModel.Id}_codeset.txt");
-                     readCodeSetfile(machineModel, fileInfo);
+                     string[] lines = File.ReadAllLines(fileInfo.FullName);
+                     // should be safe to read them here manually since they were written by the program
+                     //count the number of lines with <CN>
+                     foreach (string line in lines)
+                     {
+                        if (line.Split('>').First() == "<CN")
+                        {
+                           numberOfMachines++;
+                        }
+                     }
                   }
-                  else if (fileInfo.Name == $"{machineModel.Id}_CN_AbsoluteDoseCalibration.xml")
-                  {
-                     //MessageBox.Show($"{machineModel.Id}_CN_AbsoluteDoseCalibration.xml");
-                     readAbsoluteDoseCalXml(machineModel, fileInfo);
-                  }
-                  else if (fileInfo.Name == $"{machineModel.Id}_CN_OutputFactorTable.xml")
-                  {
-                     readOutputFactorTableXml(machineModel, fileInfo);
-                  }
-                  else if (fileInfo.Name == $"{machineModel.Id}_CN_TMR_processed.xml")
-                  {
-                     readTmrXml(machineModel, fileInfo,"processed");
-                  }
-                  else if (fileInfo.Name == $"{machineModel.Id}_CN_TMR_calculated.xml")
-                  {
-                     readTmrXml(machineModel, fileInfo,"calculated");
-                  }
-
                }
-               //don't know which oder these things are in do have to connect output factors and tmrdata later
-               machineModel.ConnectOutputFactorsTMRs();
-               machineModel.ConnectTmrCurveTMR();
-               AppConfigModel.MachineModels.Add(machineModel);
+               for (int i = 0; i <= numberOfMachines; i+=2) {
+                  MachineModel machineModel = new MachineModel();
+                  machineModel.Id = directoryInfo.Name;
+                  foreach (var file in Directory.GetFiles(directory))
+                  {
+                     FileInfo fileInfo = new FileInfo(file);
+                     Console.WriteLine(fileInfo.Name);
+                     if (fileInfo.Name == $"{machineModel.Id}_codeset.txt")
+                     {
+                        //MessageBox.Show($"{machineModel.Id}_codeset.txt");
+                        readCodeSetfile(machineModel, fileInfo,i);
+                     }
+                     else if (fileInfo.Name == $"{machineModel.Id}_CN_AbsoluteDoseCalibration.xml")
+                     {
+                        //MessageBox.Show($"{machineModel.Id}_CN_AbsoluteDoseCalibration.xml");
+                        readAbsoluteDoseCalXml(machineModel, fileInfo);
+                     }
+                     else if (fileInfo.Name == $"{machineModel.Id}_CN_OutputFactorTable.xml")
+                     {
+                        readOutputFactorTableXml(machineModel, fileInfo);
+                     }
+                     else if (fileInfo.Name == $"{machineModel.Id}_CN_TMR_processed.xml")
+                     {
+                        readTmrXml(machineModel, fileInfo, "processed");
+                     }
+                     else if (fileInfo.Name == $"{machineModel.Id}_CN_TMR_calculated.xml")
+                     {
+                        readTmrXml(machineModel, fileInfo, "calculated");
+                     }
+
+                  }
+                  //don't know which oder these things are in do have to connect output factors and tmrdata later
+                  machineModel.ConnectOutputFactorsTMRs();
+                  machineModel.ConnectTmrCurveTMR();
+                  AppConfigModel.MachineModels.Add(machineModel);
+               }
             }
          }
       }
@@ -374,37 +395,39 @@ namespace SRSConeMUVerify.ViewModels
 
       }
 
-      private void readCodeSetfile(MachineModel machineModel, FileInfo fileInfo)
+      private void readCodeSetfile(MachineModel machineModel, FileInfo fileInfo, int i)
       {
          string[] lines = File.ReadAllLines(fileInfo.FullName);
-         // should be safe to read them here manually since they were written by the program
+         //i tells me the machine i want
 
-         List<string> items = ExtractFromString(lines[1], "<", ">");
-         // TODO better error checking than this if mapfile has empty machine configuration
-         if(items.Count == 0)
          {
-            machineModel.Name = "No Machine";
-            machineModel.Energy = "No Energy";
-            TMRModel tmrModel = new TMRModel();
-            tmrModel.ConeSize = "0mm CC";
-            machineModel.TMRModels.Add(tmrModel);
-         }
-         else
-         {
-            machineModel.Name = items.First();
-            machineModel.Energy = items.Last();
-            items = ExtractFromString(lines[2], "<", ">");
-            foreach (var item in items)
+            List<string> items = ExtractFromString(lines[i+1], "<", ">");
+            // TODO better error checking than this if mapfile has empty machine configuration
+            if (items.Count == 0)
             {
-               if (item.Contains("CC"))
+               machineModel.Name = "No Machine";
+               machineModel.Energy = "No Energy";
+               TMRModel tmrModel = new TMRModel();
+               tmrModel.ConeSize = "0mm CC";
+               machineModel.TMRModels.Add(tmrModel);
+            }
+            else
+            {
+               machineModel.Name = items.First();
+               machineModel.Energy = items.Last();
+               items = ExtractFromString(lines[i+2], "<", ">");
+               foreach (var item in items)
                {
-                  TMRModel tmrModel = new TMRModel();
-                  tmrModel.ConeSize = item;
-                  machineModel.TMRModels.Add(tmrModel);
+                  if (item.Contains("CC"))
+                  {
+                     TMRModel tmrModel = new TMRModel();
+                     tmrModel.ConeSize = item;
+                     machineModel.TMRModels.Add(tmrModel);
+                  }
                }
             }
+
          }
-         
       }
       private static List<string> ExtractFromString(string source, string start, string end)
       {
@@ -454,22 +477,39 @@ namespace SRSConeMUVerify.ViewModels
             List<string> lines = new List<string>();
             string machineCodeName = GetStringBetweenTag(codeset.MachineCode, '<', '>');
             lines.Add(codeset.MachineCode);
-            lines.Add(codeset.TreatmentMachine);
-            lines.Add(codeset.AddOn);
-            DirectoryInfo machineDirectoryInfo = Directory.CreateDirectory(Path.Combine(directoryInfo.FullName, machineCodeName));
-            string codesetName = machineCodeName + "_codeset.txt";
-            string pathName = Path.Combine(machineDirectoryInfo.FullName, codesetName);
-            File.WriteAllLines(pathName, lines);
+            for(int i=0;i<codeset.TreatmentMachine.Count;i++)
+            {
+               lines.Add(codeset.TreatmentMachine[i]);
+               lines.Add(codeset.AddOn[i]);
+            }
+            if (machineCodeName is null)
+            {
+               continue;
+            }
+            else
+            {
+                
+               DirectoryInfo machineDirectoryInfo = Directory.CreateDirectory(Path.Combine(directoryInfo.FullName, machineCodeName));
+               string codesetName = machineCodeName + "_codeset.txt";
+               string pathName = Path.Combine(machineDirectoryInfo.FullName, codesetName);
+               File.WriteAllLines(pathName, lines);
+            }
 
          }
 
       }
       public string GetStringBetweenTag(string input, char tagBegin, char tagEnd)
       {
-
-         int startIndex = input.IndexOf(tagBegin);
-         int endIndex = input.IndexOf(tagEnd);
-         return input.Substring(startIndex + 1, endIndex - startIndex - 1);
+         if (input is null)
+         {
+            return null;
+         }
+         else
+         {
+            int startIndex = input.IndexOf(tagBegin);
+            int endIndex = input.IndexOf(tagEnd);
+            return input.Substring(startIndex + 1, endIndex - startIndex - 1);
+         }
       }
       private void UpdateAppConfigJson()
       {

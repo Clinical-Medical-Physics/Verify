@@ -256,6 +256,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\SRSCalculationModels.xml" />
     <Content Include="Resources\Verify.gif" />
     <SplashScreen Include="Resources\Verify.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -286,9 +287,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\SRSCalculationModels.xml" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\DVHSelectionView.xaml">

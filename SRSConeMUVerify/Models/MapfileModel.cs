@@ -21,8 +21,8 @@ namespace SRSConeMUVerify.Models
    public class CodeSet
    {
       public string MachineCode { get; set; }
-      public string TreatmentMachine { get; set; }
-      public string AddOn { get; set; }
+      public List<string> TreatmentMachine { get; set; }
+      public List<string> AddOn { get; set; }
    }
    public class DataSet
    {

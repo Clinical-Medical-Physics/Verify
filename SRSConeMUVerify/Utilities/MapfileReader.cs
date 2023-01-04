@@ -35,6 +35,8 @@ namespace SRSConeMUVerify.Utilities
             {
                case @"$StartOfCodeSet":
                   CodeSet codeSet = new CodeSet();
+                  codeSet.TreatmentMachine = new List<string>();
+                  codeSet.AddOn = new List<string>();
                   i = GetCodeSetFromLines(lines, i, codeSet);
                   mapfileModel.CodeSets.Add(codeSet);
                   break;
@@ -58,13 +60,18 @@ namespace SRSConeMUVerify.Utilities
       {
          // read until $EndOfcodeSet found
          int endIndex = startIndex;
-         for (int i = startIndex; i < startIndex + 6; i++)
+         bool foundEndIndex = false;
+         //for (int i = startIndex; i < startIndex + 6; i++)
+         int k = startIndex;
+         while(!foundEndIndex)
          {
-            if (lines[i] == @"$EndOfCodeSet")
+            if (lines[k] == @"$EndOfCodeSet")
             {
-               endIndex = i;
-               break;
+               endIndex = k;
+               foundEndIndex = true;
+               //break;
             }
+            k++;
          }
          char[] splitter = { ':' };
          for (int i = startIndex + 1; i < endIndex; i++)
@@ -73,15 +80,44 @@ namespace SRSConeMUVerify.Utilities
             switch (line[0].Trim())
             {
                case "Machine Code":
-                  codeSet.MachineCode = line[1];
+                  if (line[1] is null)
+                  {
+                     codeSet.MachineCode = "Null Machine";
+                  }
+                  else
+                  {
+                     codeSet.MachineCode = line[1];
+                  }
                   break;
                case "Treatment Machine":
-                  codeSet.TreatmentMachine = line[1];
+                  if (line[1] is null)
+                  {
+                     codeSet.TreatmentMachine.Add("Null Treatment Machine");
+                  }
+                  else
+                  {
+                     codeSet.TreatmentMachine.Add(line[1]);
+                  }
                   break;
                case "AddOn":
-                  codeSet.AddOn = line[1];
+                  if (line[1] is null)
+                  {
+                     codeSet.AddOn.Add("Null AddOn");
+                  }
+                  else
+                  {
+                     codeSet.AddOn.Add(line[1]);
+                  }
                   break;
             }
+         }
+         if(codeSet.TreatmentMachine.Count == 0)
+         {
+            codeSet.TreatmentMachine.Add("<Null Machine><Null Energy>");
+         }
+         if(codeSet.AddOn.Count == 0)
+         {
+            codeSet.AddOn.Add("<CN><Null addon><>");
          }
          return endIndex + 1;
       }
